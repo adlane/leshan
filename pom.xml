@@ -259,8 +259,8 @@ Contributors:
                     <version>3.7.0</version>
                     <configuration>
                         <encoding>UTF-8</encoding>
-                        <source>1.7</source>
-                        <target>1.7</target>
+                        <source>1.6</source>
+                        <target>1.6</target>
                         <debug>true</debug>
                         <optimize>true</optimize>
                         <showDeprecations>true</showDeprecations>
