@@ -156,8 +156,14 @@ public class ConfigurationChecker {
     private static Certificate decodeCertificate(byte[] encodedCert) {
         try {
             CertificateFactory cf = CertificateFactory.getInstance("X.509");
-            try (ByteArrayInputStream in = new ByteArrayInputStream(encodedCert)) {
+            ByteArrayInputStream in = null;
+            try {
+                in = new ByteArrayInputStream(encodedCert);
                 return cf.generateCertificate(in);
+            } finally {
+                if (in != null) {
+                    in.close();
+                }
             }
         } catch (CertificateException e) {
             LOG.debug("Failed to decode X.509 certificate", e);

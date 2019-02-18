@@ -99,9 +99,15 @@ public class BootstrapStoreImpl implements BootstrapStore {
         try {
             File file = new File(filename);
             if (file.exists()) {
-                try (InputStreamReader in = new InputStreamReader(new FileInputStream(file))) {
+                InputStreamReader in = null;
+                try {
+                    in = new InputStreamReader(new FileInputStream(file));
                     Map<String, BootstrapConfig> config = gson.fromJson(in, gsonType);
                     bootstrapByEndpoint.putAll(config);
+                } finally {
+                    if (in != null) {
+                        in.close();
+                    }
                 }
             }
         } catch (Exception e) {
@@ -122,8 +128,14 @@ public class BootstrapStoreImpl implements BootstrapStore {
             }
 
             // Write file
-            try (OutputStreamWriter out = new OutputStreamWriter(new FileOutputStream(filename))) {
+            OutputStreamWriter out = null;
+            try {
+                out = new OutputStreamWriter(new FileOutputStream(filename));
                 out.write(gson.toJson(getBootstrapConfigs(), gsonType));
+            } finally {
+                if (out != null) {
+                    out.close();
+                }
             }
         } catch (Exception e) {
             LOG.error("Could not save bootstrap infos to file", e);
