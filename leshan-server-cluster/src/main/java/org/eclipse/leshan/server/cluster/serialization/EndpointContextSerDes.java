@@ -94,7 +94,9 @@ public class EndpointContextSerDes {
                 X509EncodedKeySpec spec = new X509EncodedKeySpec(rpk);
                 PublicKey publicKey = KeyFactory.getInstance("EC").generatePublic(spec);
                 principal = new RawPublicKeyIdentity(publicKey);
-            } catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
+            } catch (InvalidKeySpecException e) {
+                throw new IllegalStateException("Invalid security info content", e);
+            } catch (NoSuchAlgorithmException e) {
                 throw new IllegalStateException("Invalid security info content", e);
             }
         } else if ((value = peer.get(KEY_DN)) != null) {

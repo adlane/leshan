@@ -104,8 +104,13 @@ public class SecurityInfoSerDes {
                 KeySpec keySpec = new ECPublicKeySpec(new ECPoint(new BigInteger(x), new BigInteger(y)), parameterSpec);
 
                 key = KeyFactory.getInstance("EC").generatePublic(keySpec);
-            } catch (IllegalArgumentException | InvalidKeySpecException | NoSuchAlgorithmException
-                    | InvalidParameterSpecException e) {
+            } catch (IllegalArgumentException e) {
+                throw new IllegalStateException("Invalid security info content", e);
+            } catch (InvalidKeySpecException e) {
+                throw new IllegalStateException("Invalid security info content", e);
+            } catch (NoSuchAlgorithmException e) {
+                throw new IllegalStateException("Invalid security info content", e);
+            } catch (InvalidParameterSpecException e) {
                 throw new IllegalStateException("Invalid security info content", e);
             }
             i = SecurityInfo.newRawPublicKeyInfo(ep, key);

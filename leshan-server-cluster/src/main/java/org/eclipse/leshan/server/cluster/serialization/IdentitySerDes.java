@@ -72,7 +72,9 @@ public class IdentitySerDes {
                 X509EncodedKeySpec spec = new X509EncodedKeySpec(rpk);
                 PublicKey publicKey = KeyFactory.getInstance("EC").generatePublic(spec);
                 return Identity.rpk(new InetSocketAddress(address, port), publicKey);
-            } catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
+            } catch (InvalidKeySpecException e) {
+                throw new IllegalStateException("Invalid security info content", e);
+            } catch (NoSuchAlgorithmException e) {
                 throw new IllegalStateException("Invalid security info content", e);
             }
         }
