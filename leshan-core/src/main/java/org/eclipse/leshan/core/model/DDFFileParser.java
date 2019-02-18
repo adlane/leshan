@@ -91,34 +91,26 @@ public class DDFFileParser {
 
         for (int i = 0; i < object.getChildNodes().getLength(); i++) {
             Node field = object.getChildNodes().item(i);
-            switch (field.getNodeName()) {
-            case "ObjectID":
+            if (field.getNodeName().equals("ObjectID")) {
                 id = Integer.valueOf(field.getTextContent());
-                break;
-            case "Name":
+            } else if (field.getNodeName().equals("Name")) {
                 name = field.getTextContent();
-                break;
-            case "Description1":
+            } else if (field.getNodeName().equals("Description1")) {
                 description = field.getTextContent();
-                break;
-            case "ObjectVersion":
+            } else if (field.getNodeName().equals("ObjectVersion")) {
                 if (!StringUtils.isEmpty(field.getTextContent()))
                     version = field.getTextContent();
-                break;
-            case "MultipleInstances":
+            } else if (field.getNodeName().equals("MultipleInstances")) {
                 multiple = "Multiple".equals(field.getTextContent());
-                break;
-            case "Mandatory":
+            } else if (field.getNodeName().equals("Mandatory")) {
                 mandatory = "Mandatory".equals(field.getTextContent());
-                break;
-            case "Resources":
+            } else if (field.getNodeName().equals("Resources")) {
                 for (int j = 0; j < field.getChildNodes().getLength(); j++) {
                     Node item = field.getChildNodes().item(j);
                     if (item.getNodeName().equals("Item")) {
                         resources.add(this.parseResource(item));
                     }
                 }
-                break;
             }
         }
 
@@ -140,56 +132,39 @@ public class DDFFileParser {
 
         for (int i = 0; i < item.getChildNodes().getLength(); i++) {
             Node field = item.getChildNodes().item(i);
-            switch (field.getNodeName()) {
-            case "Name":
+            if (field.getNodeName().equals("Name")) {
                 name = field.getTextContent();
-                break;
-            case "Operations":
+            } else if (field.getNodeName().equals("Operations")) {
                 String strOp = field.getTextContent();
                 if (strOp != null && !strOp.isEmpty()) {
                     operations = Operations.valueOf(strOp);
                 }
-                break;
-            case "MultipleInstances":
+            } else if (field.getNodeName().equals("MultipleInstances")) {
                 multiple = "Multiple".equals(field.getTextContent());
-                break;
-            case "Mandatory":
+            } else if (field.getNodeName().equals("Mandatory")) {
                 mandatory = "Mandatory".equals(field.getTextContent());
-                break;
-            case "Type":
-                switch (field.getTextContent()) {
-                case "String":
+            } else if (field.getNodeName().equals("Type")) {
+                if (field.getTextContent().equals("String")) {
                     type = Type.STRING;
-                    break;
-                case "Integer":
+                } else if (field.getTextContent().equals("Integer")) {
                     type = Type.INTEGER;
-                    break;
-                case "Float":
+                } else if (field.getTextContent().equals("Float")) {
                     type = Type.FLOAT;
-                    break;
-                case "Boolean":
+                } else if (field.getTextContent().equals("Boolean")) {
                     type = Type.BOOLEAN;
-                    break;
-                case "Opaque":
+                } else if (field.getTextContent().equals("Opaque")) {
                     type = Type.OPAQUE;
-                    break;
-                case "Time":
+                } else if (field.getTextContent().equals("Time")) {
                     type = Type.TIME;
-                    break;
-                case "Objlnk":
+                } else if (field.getTextContent().equals("Objlnk")) {
                     type = Type.OBJLNK;
-                    break;
                 }
-                break;
-            case "RangeEnumeration":
+            } else if (field.getNodeName().equals("RangeEnumeration")) {
                 rangeEnumeration = field.getTextContent();
-                break;
-            case "Units":
+            } else if (field.getNodeName().equals("Units")) {
                 units = field.getTextContent();
-                break;
-            case "Description":
+            } else if (field.getNodeName().equals("Description")) {
                 description = field.getTextContent();
-                break;
             }
 
         }
