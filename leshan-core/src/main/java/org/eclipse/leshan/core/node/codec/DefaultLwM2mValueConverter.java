@@ -112,7 +112,11 @@ public class DefaultLwM2mValueConverter implements LwM2mValueConverter {
                     DatatypeFactory datatypeFactory = DatatypeFactory.newInstance();
                     XMLGregorianCalendar cal = datatypeFactory.newXMLGregorianCalendar((String) value);
                     return cal.toGregorianCalendar().getTime();
-                } catch (DatatypeConfigurationException | IllegalArgumentException e) {
+                } catch (DatatypeConfigurationException e) {
+                    LOG.debug("Unable to convert string to date", e);
+                    throw new CodecException("Unable to convert string (%s) to date for resource %s", value,
+                            resourcePath);
+                } catch (IllegalArgumentException e) {
                     LOG.debug("Unable to convert string to date", e);
                     throw new CodecException("Unable to convert string (%s) to date for resource %s", value,
                             resourcePath);

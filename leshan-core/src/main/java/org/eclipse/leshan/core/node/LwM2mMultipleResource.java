@@ -245,7 +245,9 @@ public class LwM2mMultipleResource implements LwM2mResource {
                             .get(key));
                 }
             }
-        } catch (ClassCastException | NullPointerException unused) {
+        } catch (ClassCastException unused) {
+            return false;
+        } catch (NullPointerException unused) {
             return false;
         }
 
