@@ -255,7 +255,7 @@ public class ObserveTest {
         // create time-stamped nodes
         TimestampedLwM2mNode mostRecentNode = new TimestampedLwM2mNode(System.currentTimeMillis(),
                 LwM2mSingleResource.newStringResource(15, "Paris"));
-        List<TimestampedLwM2mNode> timestampedNodes = new ArrayList<>();
+        List<TimestampedLwM2mNode> timestampedNodes = new ArrayList<TimestampedLwM2mNode>();
         timestampedNodes.add(mostRecentNode);
         timestampedNodes.add(new TimestampedLwM2mNode(mostRecentNode.getTimestamp() - 2,
                 LwM2mSingleResource.newStringResource(15, "Londres")));
@@ -298,7 +298,7 @@ public class ObserveTest {
         // create time-stamped nodes
         TimestampedLwM2mNode mostRecentNode = new TimestampedLwM2mNode(System.currentTimeMillis(),
                 new LwM2mObjectInstance(0, LwM2mSingleResource.newStringResource(15, "Paris")));
-        List<TimestampedLwM2mNode> timestampedNodes = new ArrayList<>();
+        List<TimestampedLwM2mNode> timestampedNodes = new ArrayList<TimestampedLwM2mNode>();
         timestampedNodes.add(mostRecentNode);
         timestampedNodes.add(new TimestampedLwM2mNode(mostRecentNode.getTimestamp() - 2,
                 new LwM2mObjectInstance(0, LwM2mSingleResource.newStringResource(15, "Londres"))));
@@ -341,7 +341,7 @@ public class ObserveTest {
         // create time-stamped nodes
         TimestampedLwM2mNode mostRecentNode = new TimestampedLwM2mNode(System.currentTimeMillis(),
                 new LwM2mObject(3, new LwM2mObjectInstance(0, LwM2mSingleResource.newStringResource(15, "Paris"))));
-        List<TimestampedLwM2mNode> timestampedNodes = new ArrayList<>();
+        List<TimestampedLwM2mNode> timestampedNodes = new ArrayList<TimestampedLwM2mNode>();
         timestampedNodes.add(mostRecentNode);
         timestampedNodes.add(new TimestampedLwM2mNode(mostRecentNode.getTimestamp() - 2,
                 new LwM2mObject(3, new LwM2mObjectInstance(0, LwM2mSingleResource.newStringResource(15, "Londres")))));
