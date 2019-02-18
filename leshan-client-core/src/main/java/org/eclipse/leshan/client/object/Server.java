@@ -124,7 +124,7 @@ public class Server extends BaseInstanceEnabler {
             if (value.getType() != Type.BOOLEAN) {
                 return WriteResponse.badRequest("invalid type");
             }
-            notifyWhenDisable = (boolean) value.getValue();
+            notifyWhenDisable = (Boolean) value.getValue();
             return WriteResponse.success();
 
         case 7: // binding

@@ -68,7 +68,7 @@ public class ServersInfoExtractor {
 
         for (LwM2mObjectInstance security : securities.getInstances().values()) {
             try {
-                if ((boolean) security.getResource(SEC_BOOTSTRAP).getValue()) {
+                if ((Boolean) security.getResource(SEC_BOOTSTRAP).getValue()) {
                     if (infos.bootstrap != null) {
                         LOG.warn("There is more than one bootstrap configuration in security object.");
                     } else {
@@ -76,7 +76,7 @@ public class ServersInfoExtractor {
                         ServerInfo info = new ServerInfo();
                         LwM2mResource serverIdResource = security.getResource(SEC_SERVER_ID);
                         if (serverIdResource != null && serverIdResource.getValue() != null)
-                            info.serverId = (long) serverIdResource.getValue();
+                            info.serverId = (Long) serverIdResource.getValue();
                         else
                             info.serverId = 0;
                         info.serverUri = new URI((String) security.getResource(SEC_SERVER_URI).getValue());
@@ -99,7 +99,7 @@ public class ServersInfoExtractor {
                     // create device management info
                     DmServerInfo info = new DmServerInfo();
                     info.serverUri = new URI((String) security.getResource(SEC_SERVER_URI).getValue());
-                    info.serverId = (long) security.getResource(SEC_SERVER_ID).getValue();
+                    info.serverId = (Long) security.getResource(SEC_SERVER_ID).getValue();
                     info.secureMode = getSecurityMode(security);
                     if (info.secureMode == SecurityMode.PSK) {
                         info.pskId = getPskIdentity(security);
@@ -116,7 +116,7 @@ public class ServersInfoExtractor {
                     // search corresponding device management server
                     for (LwM2mObjectInstance server : servers.getInstances().values()) {
                         if (info.serverId == (Long) server.getResource(SRV_SERVER_ID).getValue()) {
-                            info.lifetime = (long) server.getResource(SRV_LIFETIME).getValue();
+                            info.lifetime = (Long) server.getResource(SRV_LIFETIME).getValue();
                             info.binding = BindingMode.valueOf((String) server.getResource(SRV_BINDING).getValue());
 
                             infos.deviceMangements.put(info.serverId, info);
@@ -148,7 +148,7 @@ public class ServersInfoExtractor {
     }
 
     public static SecurityMode getSecurityMode(LwM2mObjectInstance securityInstance) {
-        return SecurityMode.fromCode((long) securityInstance.getResource(SEC_SECURITY_MODE).getValue());
+        return SecurityMode.fromCode((Long) securityInstance.getResource(SEC_SECURITY_MODE).getValue());
     }
 
     public static String getPskIdentity(LwM2mObjectInstance securityInstance) {
