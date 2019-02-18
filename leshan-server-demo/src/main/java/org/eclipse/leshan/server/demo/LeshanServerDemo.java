@@ -280,7 +280,8 @@ public class LeshanServerDemo {
         if (keyStorePath != null) {
             try {
                 KeyStore keyStore = KeyStore.getInstance(keyStoreType);
-                try (FileInputStream fis = new FileInputStream(keyStorePath)) {
+                {
+                    FileInputStream fis = new FileInputStream(keyStorePath);
                     keyStore.load(fis, keyStorePass == null ? null : keyStorePass.toCharArray());
                     List<Certificate> trustedCertificates = new ArrayList<Certificate>();
                     for (Enumeration<String> aliases = keyStore.aliases(); aliases.hasMoreElements();) {
@@ -319,7 +320,10 @@ public class LeshanServerDemo {
                     builder.setTrustedCertificates(
                             trustedCertificates.toArray(new Certificate[trustedCertificates.size()]));
                 }
-            } catch (KeyStoreException | IOException e) {
+            } catch (KeyStoreException e) {
+                LOG.error("Unable to initialize X.509.", e);
+                System.exit(-1);
+            } catch (IOException e) {
                 LOG.error("Unable to initialize X.509.", e);
                 System.exit(-1);
             }
