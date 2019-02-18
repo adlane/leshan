@@ -65,7 +65,7 @@ public class RedisRequestResponseHandler {
     private final ExecutorService executorService;
     private final RedisTokenHandler tokenHandler;
     private final ObservationService observationService;
-    private final Map<KeyId, String> observatioIdToTicket = new ConcurrentHashMap<>();
+    private final Map<KeyId, String> observatioIdToTicket = new ConcurrentHashMap<KeyId, String>();
 
     public RedisRequestResponseHandler(Pool<Jedis> p, LwM2mServer server, RegistrationService registrationService,
             RedisTokenHandler tokenHandler, ObservationService observationService) {

@@ -77,7 +77,7 @@ public class ObservationSerDes {
 
         JsonValue ctxValue = v.get("context");
         if (ctxValue != null) {
-            Map<String, String> context = new HashMap<>();
+            Map<String, String> context = new HashMap<String, String>();
             JsonObject ctxObject = (JsonObject) ctxValue;
             for (String name : ctxObject.names()) {
                 context.put(name, ctxObject.getString(name, null));

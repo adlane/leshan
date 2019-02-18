@@ -89,7 +89,7 @@ public class LwM2mNodeSerDes {
 
         switch (kind) {
         case "object": {
-            Collection<LwM2mObjectInstance> instances = new ArrayList<>();
+            Collection<LwM2mObjectInstance> instances = new ArrayList<LwM2mObjectInstance>();
             JsonArray jInstances = (JsonArray) o.get("instances");
             for (JsonValue jInstance : jInstances) {
                 LwM2mObjectInstance instance = (LwM2mObjectInstance) deserialize((JsonObject) jInstance);
@@ -98,7 +98,7 @@ public class LwM2mNodeSerDes {
             return new LwM2mObject(id, instances);
         }
         case "instance": {
-            Collection<LwM2mResource> resources = new ArrayList<>();
+            Collection<LwM2mResource> resources = new ArrayList<LwM2mResource>();
             JsonObject jResources = (JsonObject) o.get("resources");
             for (Member jResource : jResources) {
                 LwM2mResource resource = (LwM2mResource) deserialize((JsonObject) jResource.getValue());
@@ -120,7 +120,7 @@ public class LwM2mNodeSerDes {
                 throw new IllegalStateException("Invalid LwM2mNode missing type attribute");
             Type type = Enum.valueOf(Type.class, jType);
 
-            Map<Integer, Object> values = new HashMap<>();
+            Map<Integer, Object> values = new HashMap<Integer, Object>();
             JsonObject jValues = (JsonObject) o.get("values");
             for (Member jValue : jValues) {
                 Integer valueId = Integer.valueOf(jValue.getName());
