@@ -47,27 +47,27 @@ public class TlvDecoder {
                 // decode type
                 int typeByte = input.get() & 0xFF;
                 TlvType type;
-                switch (typeByte & 0b1100_0000) {
-                case 0b0000_0000:
+                switch (typeByte & 0xC0) {
+                case 0x00:
                     type = TlvType.OBJECT_INSTANCE;
                     break;
-                case 0b0100_0000:
+                case 0x40:
                     type = TlvType.RESOURCE_INSTANCE;
                     break;
-                case 0b1000_0000:
+                case 0x80:
                     type = TlvType.MULTIPLE_RESOURCE;
                     break;
-                case 0b1100_0000:
+                case 0xC0:
                     type = TlvType.RESOURCE_VALUE;
                     break;
                 default:
-                    throw new TlvException("unknown type: " + (typeByte & 0b1100_0000));
+                    throw new TlvException("unknown type: " + (typeByte & 0xC0));
                 }
 
                 // decode identifier
                 int identifier;
                 try {
-                    if ((typeByte & 0b0010_0000) == 0) {
+                    if ((typeByte & 0x20) == 0) {
                         identifier = input.get() & 0xFF;
                     } else {
                         identifier = input.getShort() & 0xFFFF;
@@ -79,29 +79,29 @@ public class TlvDecoder {
 
                 // decode length
                 int length;
-                int lengthType = typeByte & 0b0001_1000;
+                int lengthType = typeByte & 0x18;
                 try {
                     switch (lengthType) {
-                    case 0b0000_0000:
+                    case 0x00:
                         // 2 bit length
-                        length = typeByte & 0b0000_0111;
+                        length = typeByte & 0x07;
                         break;
-                    case 0b0000_1000:
+                    case 0x08:
                         // 8 bit length
                         length = input.get() & 0xFF;
                         break;
-                    case 0b0001_0000:
+                    case 0x10:
                         // 16 bit length
                         length = input.getShort() & 0xFFFF;
                         break;
-                    case 0b0001_1000:
+                    case 0x18:
                         // 24 bit length
                         int b = input.get() & 0x000000FF;
                         int s = input.getShort() & 0x0000FFFF;
                         length = (b << 16) | s;
                         break;
                     default:
-                        throw new TlvException("unknown length type: " + (typeByte & 0b0001_1000));
+                        throw new TlvException("unknown length type: " + (typeByte & 0x18));
                     }
                 } catch (BufferUnderflowException e) {
                     throw new TlvException("Invalid 'length' length", e);
