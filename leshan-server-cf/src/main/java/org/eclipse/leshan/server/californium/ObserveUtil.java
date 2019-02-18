@@ -44,16 +44,12 @@ public class ObserveUtil {
         Map<String, String> context = null;
 
         for (Entry<String, String> ctx : request.getUserContext().entrySet()) {
-            switch (ctx.getKey()) {
-            case CTX_REGID:
+            if (ctx.getKey().equals(CTX_REGID)) {
                 regId = ctx.getValue();
-                break;
-            case CTX_LWM2M_PATH:
+            } else if (ctx.getKey().equals(CTX_LWM2M_PATH)) {
                 lwm2mPath = ctx.getValue();
-                break;
-            case CTX_ENDPOINT:
-                break;
-            default:
+            } else if (ctx.getKey().equals(CTX_ENDPOINT)) {
+            } else {
                 if (context == null) {
                     context = new HashMap<>();
                 }
