@@ -61,7 +61,7 @@ public class ObjectEnabler extends BaseObjectEnabler {
     public ObjectEnabler(int id, ObjectModel objectModel, Map<Integer, LwM2mInstanceEnabler> instances,
             LwM2mInstanceEnablerFactory instanceFactory, ContentFormat defaultContentFormat) {
         super(id, objectModel);
-        this.instances = new HashMap<>(instances);
+        this.instances = new HashMap<Integer, LwM2mInstanceEnabler>(instances);
         this.instanceFactory = instanceFactory;
         this.defaultContentFormat = defaultContentFormat;
         for (Entry<Integer, LwM2mInstanceEnabler> entry : this.instances.entrySet()) {
@@ -71,7 +71,7 @@ public class ObjectEnabler extends BaseObjectEnabler {
 
     @Override
     public synchronized List<Integer> getAvailableInstanceIds() {
-        List<Integer> ids = new ArrayList<>(instances.keySet());
+        List<Integer> ids = new ArrayList<Integer>(instances.keySet());
         Collections.sort(ids);
         return ids;
     }
@@ -139,7 +139,7 @@ public class ObjectEnabler extends BaseObjectEnabler {
 
         // Manage Object case
         if (path.isObject()) {
-            List<LwM2mObjectInstance> lwM2mObjectInstances = new ArrayList<>();
+            List<LwM2mObjectInstance> lwM2mObjectInstances = new ArrayList<LwM2mObjectInstance>();
             for (LwM2mInstanceEnabler instance : instances.values()) {
                 ReadResponse response = instance.read(identity);
                 if (response.isSuccess()) {
@@ -168,7 +168,7 @@ public class ObjectEnabler extends BaseObjectEnabler {
 
         // Manage Object case
         if (path.isObject()) {
-            List<LwM2mObjectInstance> lwM2mObjectInstances = new ArrayList<>();
+            List<LwM2mObjectInstance> lwM2mObjectInstances = new ArrayList<LwM2mObjectInstance>();
             for (LwM2mInstanceEnabler instance : instances.values()) {
                 ReadResponse response = instance.observe(identity);
                 if (response.isSuccess()) {

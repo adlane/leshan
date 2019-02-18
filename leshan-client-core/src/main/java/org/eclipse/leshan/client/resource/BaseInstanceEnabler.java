@@ -35,7 +35,7 @@ import org.eclipse.leshan.core.response.WriteResponse;
 
 public class BaseInstanceEnabler implements LwM2mInstanceEnabler {
 
-    protected List<ResourceChangedListener> listeners = new ArrayList<>();
+    protected List<ResourceChangedListener> listeners = new ArrayList<ResourceChangedListener>();
     protected Integer id = null;
     protected ObjectModel model;
 
@@ -83,7 +83,7 @@ public class BaseInstanceEnabler implements LwM2mInstanceEnabler {
 
     @Override
     public ReadResponse read(ServerIdentity identity) {
-        List<LwM2mResource> resources = new ArrayList<>();
+        List<LwM2mResource> resources = new ArrayList<LwM2mResource>();
         for (ResourceModel resourceModel : model.resources.values()) {
             // check, if internal request (SYSTEM) or readable
             if (identity.isSystem() || resourceModel.operations.isReadable()) {
@@ -102,7 +102,7 @@ public class BaseInstanceEnabler implements LwM2mInstanceEnabler {
 
     @Override
     public WriteResponse write(ServerIdentity identity, boolean replace, LwM2mObjectInstance value) {
-        Map<Integer, LwM2mResource> resourcesToWrite = new HashMap<>(value.getResources());
+        Map<Integer, LwM2mResource> resourcesToWrite = new HashMap<Integer, LwM2mResource>(value.getResources());
 
         if (replace) {
             // REPLACE
@@ -163,7 +163,7 @@ public class BaseInstanceEnabler implements LwM2mInstanceEnabler {
     @Override
     public List<Integer> getAvailableResourceIds(ObjectModel model) {
         // By default we consider that all resources defined in the model are supported
-        ArrayList<Integer> resourceIds = new ArrayList<>(model.resources.keySet());
+        ArrayList<Integer> resourceIds = new ArrayList<Integer>(model.resources.keySet());
         Collections.sort(resourceIds);
         return resourceIds;
     }
