@@ -28,7 +28,7 @@ import org.eclipse.leshan.server.registration.RegistrationService;
 
 public class CoapMessageTracer implements MessageInterceptor {
 
-    private final Map<String, CoapMessageListener> listeners = new ConcurrentHashMap<>();
+    private final Map<String, CoapMessageListener> listeners = new ConcurrentHashMap<String, CoapMessageListener>();
 
     private final RegistrationService registry;
 
