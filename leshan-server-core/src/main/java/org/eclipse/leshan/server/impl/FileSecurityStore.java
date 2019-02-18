@@ -103,7 +103,11 @@ public class FileSecurityStore extends InMemorySecurityStore {
                     LOG.debug("{} security infos loaded", infos.length);
                 }
             }
-        } catch (NonUniqueSecurityInfoException | IOException | ClassNotFoundException e) {
+        } catch (NonUniqueSecurityInfoException e) {
+            LOG.error("Could not load security infos from file", e);
+        } catch (IOException e) {
+            LOG.error("Could not load security infos from file", e);
+        } catch (ClassNotFoundException e) {
             LOG.error("Could not load security infos from file", e);
         }
     }
