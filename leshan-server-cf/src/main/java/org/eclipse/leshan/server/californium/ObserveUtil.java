@@ -51,7 +51,7 @@ public class ObserveUtil {
             } else if (ctx.getKey().equals(CTX_ENDPOINT)) {
             } else {
                 if (context == null) {
-                    context = new HashMap<>();
+                    context = new HashMap<String, String>();
                 }
                 context.put(ctx.getKey(), ctx.getValue());
             }
@@ -64,7 +64,7 @@ public class ObserveUtil {
      */
     public static Map<String, String> createCoapObserveRequestContext(String endpoint, String registrationId,
             ObserveRequest request) {
-        Map<String, String> context = new HashMap<>();
+        Map<String, String> context = new HashMap<String, String>();
         context.put(CTX_ENDPOINT, endpoint);
         context.put(CTX_REGID, registrationId);
         context.put(CTX_LWM2M_PATH, request.getPath().toString());

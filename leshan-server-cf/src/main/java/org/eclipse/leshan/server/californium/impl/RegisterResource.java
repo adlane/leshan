@@ -156,7 +156,7 @@ public class RegisterResource extends CoapResource {
         // Get object Links
         Link[] objectLinks = Link.parse(request.getPayload());
 
-        Map<String, String> additionalParams = new HashMap<>();
+        Map<String, String> additionalParams = new HashMap<String, String>();
 
         // Get parameters
         for (String param : request.getOptions().getUriQuery()) {
@@ -209,7 +209,7 @@ public class RegisterResource extends CoapResource {
         String smsNumber = null;
         BindingMode binding = null;
         Link[] objectLinks = null;
-        Map<String, String> additionalParams = new HashMap<>();
+        Map<String, String> additionalParams = new HashMap<String, String>();
 
         for (String param : request.getOptions().getUriQuery()) {
             if (param.startsWith(QUERY_PARAM_LIFETIME)) {

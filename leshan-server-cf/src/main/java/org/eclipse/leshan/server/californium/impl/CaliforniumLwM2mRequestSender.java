@@ -57,7 +57,7 @@ public class CaliforniumLwM2mRequestSender implements LwM2mRequestSender, CoapRe
     private final LwM2mNodeEncoder encoder;
     // A map which contains all pending CoAP requests
     // This is mainly used to cancel request and avoid retransmission on de-registration
-    private final ConcurrentNavigableMap<String/* registrationId#requestId */, Request /* pending coap Request */> pendingRequests = new ConcurrentSkipListMap<>();
+    private final ConcurrentNavigableMap<String/* registrationId#requestId */, Request /* pending coap Request */> pendingRequests = new ConcurrentSkipListMap<String, Request>();
 
     /**
      * @param endpoints the CoAP endpoints to use for sending requests
@@ -94,7 +94,7 @@ public class CaliforniumLwM2mRequestSender implements LwM2mRequestSender, CoapRe
             @Override
             public T buildResponse(Response coapResponse) {
                 // Build LwM2m response
-                LwM2mResponseBuilder<T> lwm2mResponseBuilder = new LwM2mResponseBuilder<>(coapRequest, coapResponse,
+                LwM2mResponseBuilder<T> lwm2mResponseBuilder = new LwM2mResponseBuilder<T>(coapRequest, coapResponse,
                         destination, model, observationService, decoder);
                 request.accept(lwm2mResponseBuilder);
                 return lwm2mResponseBuilder.getResponse();
@@ -130,7 +130,7 @@ public class CaliforniumLwM2mRequestSender implements LwM2mRequestSender, CoapRe
             @Override
             public T buildResponse(Response coapResponse) {
                 // Build LwM2m response
-                LwM2mResponseBuilder<T> lwm2mResponseBuilder = new LwM2mResponseBuilder<>(coapRequest, coapResponse,
+                LwM2mResponseBuilder<T> lwm2mResponseBuilder = new LwM2mResponseBuilder<T>(coapRequest, coapResponse,
                         destination, model, observationService, decoder);
                 request.accept(lwm2mResponseBuilder);
                 return lwm2mResponseBuilder.getResponse();

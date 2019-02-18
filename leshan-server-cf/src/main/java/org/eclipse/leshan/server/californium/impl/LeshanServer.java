@@ -175,7 +175,7 @@ public class LeshanServer implements LwM2mServer {
         });
 
         // define a set of endpoints
-        Set<Endpoint> endpoints = new HashSet<>();
+        Set<Endpoint> endpoints = new HashSet<Endpoint>();
         coapServer = new CoapServer(coapConfig) {
             @Override
             protected Resource createRoot() {
