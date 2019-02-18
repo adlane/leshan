@@ -92,7 +92,9 @@ public class FileSecurityStore extends InMemorySecurityStore {
             return;
         }
 
-        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));) {
+        ObjectInputStream in = null;
+        try {
+            in = new ObjectInputStream(new FileInputStream(file));
             SecurityInfo[] infos = (SecurityInfo[]) in.readObject();
 
             if (infos != null) {
@@ -109,10 +111,19 @@ public class FileSecurityStore extends InMemorySecurityStore {
             LOG.error("Could not load security infos from file", e);
         } catch (ClassNotFoundException e) {
             LOG.error("Could not load security infos from file", e);
+        } finally {
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    LOG.error("Could not load security infos from file", e);
+                }
+            }
         }
     }
 
     protected void saveToFile() {
+        ObjectOutputStream out = null;
         try {
             File file = new File(filename);
             if (!file.exists()) {
@@ -122,11 +133,18 @@ public class FileSecurityStore extends InMemorySecurityStore {
                 }
                 file.createNewFile();
             }
-            try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename));) {
-                out.writeObject(this.getAll().toArray(new SecurityInfo[0]));
-            }
+            out = new ObjectOutputStream(new FileOutputStream(filename));
+            out.writeObject(this.getAll().toArray(new SecurityInfo[0]));
         } catch (IOException e) {
             LOG.error("Could not save security infos to file", e);
+        } finally {
+            if (out != null) {
+                try {
+                    out.close();
+                } catch (IOException e) {
+                    LOG.error("Could not save security infos to file", e);
+                }
+            }
         }
     }
 }
