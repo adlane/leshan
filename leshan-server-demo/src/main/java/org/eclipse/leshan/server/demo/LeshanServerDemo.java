@@ -282,13 +282,13 @@ public class LeshanServerDemo {
                 KeyStore keyStore = KeyStore.getInstance(keyStoreType);
                 try (FileInputStream fis = new FileInputStream(keyStorePath)) {
                     keyStore.load(fis, keyStorePass == null ? null : keyStorePass.toCharArray());
-                    List<Certificate> trustedCertificates = new ArrayList<>();
+                    List<Certificate> trustedCertificates = new ArrayList<Certificate>();
                     for (Enumeration<String> aliases = keyStore.aliases(); aliases.hasMoreElements();) {
                         String alias = aliases.nextElement();
                         if (keyStore.isCertificateEntry(alias)) {
                             trustedCertificates.add(keyStore.getCertificate(alias));
                         } else if (keyStore.isKeyEntry(alias) && alias.equals(keyStoreAlias)) {
-                            List<X509Certificate> x509CertificateChain = new ArrayList<>();
+                            List<X509Certificate> x509CertificateChain = new ArrayList<X509Certificate>();
                             Certificate[] certificateChain = keyStore.getCertificateChain(alias);
                             if (certificateChain == null || certificateChain.length == 0) {
                                 LOG.error("Keystore alias must have a non-empty chain of X509Certificates.");

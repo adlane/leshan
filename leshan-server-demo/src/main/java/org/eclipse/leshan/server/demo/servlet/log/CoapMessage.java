@@ -80,12 +80,12 @@ public class CoapMessage {
         if (options != null) {
             List<Option> opts = options.asSortedList();
             if (!opts.isEmpty()) {
-                Map<String, List<String>> optMap = new HashMap<>();
+                Map<String, List<String>> optMap = new HashMap<String, List<String>>();
                 for (Option opt : opts) {
                     String strOption = OptionNumberRegistry.toString(opt.getNumber());
                     List<String> values = optMap.get(strOption);
                     if (values == null) {
-                        values = new ArrayList<>();
+                        values = new ArrayList<String>();
                         optMap.put(strOption, values);
                     }
                     values.add(opt.toValueString());
