@@ -34,9 +34,9 @@ public class CoapSyncRequestObserver extends AbstractRequestObserver {
     private static final Logger LOG = LoggerFactory.getLogger(CoapSyncRequestObserver.class);
 
     private CountDownLatch latch = new CountDownLatch(1);
-    private AtomicReference<Response> ref = new AtomicReference<>(null);
+    private AtomicReference<Response> ref = new AtomicReference<Response>(null);
     private AtomicBoolean coapTimeout = new AtomicBoolean(false);
-    private AtomicReference<RuntimeException> exception = new AtomicReference<>();
+    private AtomicReference<RuntimeException> exception = new AtomicReference<RuntimeException>();
     private long timeout;
 
     public CoapSyncRequestObserver(Request coapRequest, long timeout) {
