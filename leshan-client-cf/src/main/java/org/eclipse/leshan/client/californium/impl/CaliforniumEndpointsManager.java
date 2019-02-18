@@ -207,7 +207,7 @@ public class CaliforniumEndpointsManager implements EndpointsManager {
         else {
             // TODO support multi server;
             ServerInfo firstServer = serverInfo.iterator().next();
-            Collection<Server> servers = new ArrayList<>(1);
+            Collection<Server> servers = new ArrayList<Server>(1);
             servers.add(createEndpoint(firstServer));
             return servers;
         }

@@ -68,7 +68,7 @@ public class LeshanClient implements LwM2mClient {
         Validate.notNull(coapConfig);
 
         // Create Object enablers
-        this.objectEnablers = new ConcurrentHashMap<>();
+        this.objectEnablers = new ConcurrentHashMap<Integer, LwM2mObjectEnabler>();
         for (LwM2mObjectEnabler enabler : objectEnablers) {
             if (this.objectEnablers.containsKey(enabler.getId())) {
                 throw new IllegalArgumentException(
