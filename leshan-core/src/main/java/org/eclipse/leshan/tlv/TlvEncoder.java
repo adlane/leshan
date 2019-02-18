@@ -29,8 +29,8 @@ public class TlvEncoder {
     private static final Logger LOG = LoggerFactory.getLogger(TlvEncoder.class);
 
     private static final int MAX_LENGTH_8BIT = 256;
-    private static final int MAX_LENGTH_16BIT = 65_536;
-    private static final int MAX_LENGTH_24BIT = 16_777_216;
+    private static final int MAX_LENGTH_16BIT = 65536;
+    private static final int MAX_LENGTH_24BIT = 16777216;
 
     /**
      * Encodes an array of TLV.
@@ -170,34 +170,34 @@ public class TlvEncoder {
 
         switch (tlv.getType()) {
         case OBJECT_INSTANCE:
-            typeByte = 0b00_000000;
+            typeByte = 0x00;
             break;
         case RESOURCE_INSTANCE:
-            typeByte = 0b01_000000;
+            typeByte = 0x40;
             break;
         case MULTIPLE_RESOURCE:
-            typeByte = 0b10_000000;
+            typeByte = 0x80;
             break;
         case RESOURCE_VALUE:
             // encode the value
-            typeByte = 0b11_000000;
+            typeByte = 0xC0;
             break;
         default:
             throw new IllegalArgumentException("unknown TLV type : '" + tlv.getType() + "'");
         }
 
         // encode identifier length
-        typeByte |= (tlv.getIdentifier() < MAX_LENGTH_8BIT) ? 0b00_0000 : 0b10_0000;
+        typeByte |= (tlv.getIdentifier() < MAX_LENGTH_8BIT) ? 0x00 : 0x20;
 
         // type of length
         if (length < 8) {
             typeByte |= length;
         } else if (length < MAX_LENGTH_8BIT) {
-            typeByte |= 0b0000_1000;
+            typeByte |= 0x08;
         } else if (length < MAX_LENGTH_16BIT) {
-            typeByte |= 0b0001_0000;
+            typeByte |= 0x10;
         } else {
-            typeByte |= 0b0001_1000;
+            typeByte |= 0x18;
         }
 
         // fill the buffer
@@ -216,10 +216,10 @@ public class TlvEncoder {
             } else if (length < MAX_LENGTH_16BIT) {
                 b.putShort((short) length);
             } else {
-                int msb = (length & 0xFF_00_00) >> 16;
+                int msb = (length & 0xFF0000) >> 16;
                 b.put((byte) msb);
-                b.putShort((short) (length & 0xFF_FF));
-                typeByte |= 0b0001_1000;
+                b.putShort((short) (length & 0xFFFF));
+                typeByte |= 0x18;
             }
         }
 
