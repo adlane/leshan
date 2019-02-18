@@ -59,7 +59,7 @@ public class MyDevice extends BaseInstanceEnabler {
         case 10:
             return ReadResponse.success(resourceid, getMemoryFree());
         case 11:
-            Map<Integer, Long> errorCodes = new HashMap<>();
+            Map<Integer, Long> errorCodes = new HashMap<Integer, Long>();
             errorCodes.put(0, getErrorCode());
             return ReadResponse.success(resourceid, errorCodes, Type.INTEGER);
         case 13:
