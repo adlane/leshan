@@ -43,7 +43,7 @@ public class ObjectModelSerDes extends JsonSerDes<ObjectModel> {
         o.add("description", m.description);
 
         // sort resources value
-        List<ResourceModel> resourceSpecs = new ArrayList<>(m.resources.values());
+        List<ResourceModel> resourceSpecs = new ArrayList<ResourceModel>(m.resources.values());
         Collections.sort(resourceSpecs, new Comparator<ResourceModel>() {
             @Override
             public int compare(ResourceModel r1, ResourceModel r2) {

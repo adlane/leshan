@@ -39,7 +39,7 @@ public class LwM2mObjectInstance implements LwM2mNode {
         Validate.notNull(resources);
 
         this.id = id;
-        Map<Integer, LwM2mResource> resourcesMap = new HashMap<>(resources.size());
+        Map<Integer, LwM2mResource> resourcesMap = new HashMap<Integer, LwM2mResource>(resources.size());
         for (LwM2mResource resource : resources) {
             resourcesMap.put(resource.getId(), resource);
         }

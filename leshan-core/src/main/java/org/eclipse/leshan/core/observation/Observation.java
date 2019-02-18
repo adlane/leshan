@@ -46,7 +46,7 @@ public class Observation {
         this.path = path;
         this.registrationId = registrationId;
         if (context != null)
-            this.context = Collections.unmodifiableMap(new HashMap<>(context));
+            this.context = Collections.unmodifiableMap(new HashMap<String, String>(context));
         else
             this.context = Collections.emptyMap();
     }

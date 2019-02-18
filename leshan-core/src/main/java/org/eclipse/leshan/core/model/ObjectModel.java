@@ -62,7 +62,7 @@ public class ObjectModel {
         this.multiple = multiple;
         this.mandatory = mandatory;
 
-        Map<Integer, ResourceModel> resourcesMap = new HashMap<>(resources.size());
+        Map<Integer, ResourceModel> resourcesMap = new HashMap<Integer, ResourceModel>(resources.size());
         for (ResourceModel resource : resources) {
             ResourceModel old = resourcesMap.put(resource.id, resource);
             if (old != null) {

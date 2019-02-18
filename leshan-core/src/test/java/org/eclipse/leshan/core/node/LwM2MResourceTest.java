@@ -61,9 +61,9 @@ public class LwM2MResourceTest {
 
     @Test
     public void two_identical_multiple_strings_are_equal() {
-        Map<Integer, String> values1 = new HashMap<>();
+        Map<Integer, String> values1 = new HashMap<Integer, String>();
         values1.put(0, "hello");
-        Map<Integer, String> values2 = new HashMap<>();
+        Map<Integer, String> values2 = new HashMap<Integer, String>();
         values2.put(0, "hello");
 
         assertEquals(LwM2mMultipleResource.newStringResource(10, values1),
@@ -72,9 +72,9 @@ public class LwM2MResourceTest {
 
     @Test
     public void two_non_identical_multiple_strings_are_not_equal() {
-        Map<Integer, String> values1 = new HashMap<>();
+        Map<Integer, String> values1 = new HashMap<Integer, String>();
         values1.put(0, "hello");
-        Map<Integer, String> values2 = new HashMap<>();
+        Map<Integer, String> values2 = new HashMap<Integer, String>();
         values2.put(0, "world");
 
         assertNotEquals(LwM2mMultipleResource.newStringResource(10, values1),
@@ -85,9 +85,9 @@ public class LwM2MResourceTest {
 
     @Test
     public void two_identical_multiple_opaques_are_equal() {
-        Map<Integer, byte[]> values1 = new HashMap<>();
+        Map<Integer, byte[]> values1 = new HashMap<Integer, byte[]>();
         values1.put(0, "hello".getBytes());
-        Map<Integer, byte[]> values2 = new HashMap<>();
+        Map<Integer, byte[]> values2 = new HashMap<Integer, byte[]>();
         values2.put(0, "hello".getBytes());
 
         assertEquals(LwM2mMultipleResource.newBinaryResource(10, values1),
@@ -96,9 +96,9 @@ public class LwM2MResourceTest {
 
     @Test
     public void two_non_identical_multiple_opaques_are_not_equal() {
-        Map<Integer, byte[]> values1 = new HashMap<>();
+        Map<Integer, byte[]> values1 = new HashMap<Integer, byte[]>();
         values1.put(0, "hello".getBytes());
-        Map<Integer, byte[]> values2 = new HashMap<>();
+        Map<Integer, byte[]> values2 = new HashMap<Integer, byte[]>();
         values2.put(0, "world".getBytes());
 
         assertNotEquals(LwM2mMultipleResource.newBinaryResource(10, values1),
@@ -109,9 +109,9 @@ public class LwM2MResourceTest {
 
     @Test
     public void two_multiple_string_and_multiple_binary_are_not_equal() {
-        Map<Integer, String> values1 = new HashMap<>();
+        Map<Integer, String> values1 = new HashMap<Integer, String>();
         values1.put(0, "hello");
-        Map<Integer, byte[]> values2 = new HashMap<>();
+        Map<Integer, byte[]> values2 = new HashMap<Integer, byte[]>();
         values2.put(0, "hello".getBytes());
 
         assertNotEquals(LwM2mMultipleResource.newStringResource(10, values1),
@@ -135,7 +135,7 @@ public class LwM2MResourceTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void integer_multi_instances_resource_with_null_value() {
-        Map<Integer, Long> values = new HashMap<>();
+        Map<Integer, Long> values = new HashMap<Integer, Long>();
         values.put(2, 2L);
         values.put(3, null);
         LwM2mMultipleResource.newIntegerResource(0, values);
@@ -143,7 +143,7 @@ public class LwM2MResourceTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void generic_multi_instances_resource_with_null_value() {
-        Map<Integer, String> values = new HashMap<>();
+        Map<Integer, String> values = new HashMap<Integer, String>();
         values.put(2, "value");
         values.put(3, null);
         LwM2mMultipleResource.newResource(0, values, Type.STRING);
@@ -151,7 +151,7 @@ public class LwM2MResourceTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void generic_multi_instance_with_incompatible_value_and_type() {
-        Map<Integer, String> values = new HashMap<>();
+        Map<Integer, String> values = new HashMap<Integer, String>();
         values.put(2, "value");
         values.put(3, null);
         LwM2mMultipleResource.newResource(0, values, Type.BOOLEAN);

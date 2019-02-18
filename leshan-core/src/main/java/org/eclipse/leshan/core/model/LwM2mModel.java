@@ -39,9 +39,9 @@ public class LwM2mModel {
 
     public LwM2mModel(Collection<ObjectModel> objectModels) {
         if (objectModels == null) {
-            objects = new HashMap<>();
+            objects = new HashMap<Integer, ObjectModel>();
         } else {
-            Map<Integer, ObjectModel> map = new HashMap<>();
+            Map<Integer, ObjectModel> map = new HashMap<Integer, ObjectModel>();
             for (ObjectModel model : objectModels) {
                 ObjectModel old = map.put(model.id, model);
                 if (old != null) {

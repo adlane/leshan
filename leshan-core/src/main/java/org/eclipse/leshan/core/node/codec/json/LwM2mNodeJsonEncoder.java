@@ -69,7 +69,7 @@ public class LwM2mNodeJsonEncoder {
         Validate.notNull(model);
 
         InternalEncoder internalEncoder = new InternalEncoder();
-        ArrayList<JsonArrayEntry> entries = new ArrayList<>();
+        ArrayList<JsonArrayEntry> entries = new ArrayList<JsonArrayEntry>();
         for (TimestampedLwM2mNode timestampedLwM2mNode : timestampedNodes) {
             internalEncoder.objectId = path.getObjectId();
             internalEncoder.model = model;
@@ -106,7 +106,7 @@ public class LwM2mNodeJsonEncoder {
             }
 
             // Create resources
-            resourceList = new ArrayList<>();
+            resourceList = new ArrayList<JsonArrayEntry>();
             for (LwM2mObjectInstance instance : object.getInstances().values()) {
                 for (LwM2mResource resource : instance.getResources().values()) {
                     String prefixPath = Integer.toString(instance.getId()) + "/" + Integer.toString(resource.getId());
@@ -118,7 +118,7 @@ public class LwM2mNodeJsonEncoder {
         @Override
         public void visit(LwM2mObjectInstance instance) {
             LOG.trace("Encoding object instance {} into JSON", instance);
-            resourceList = new ArrayList<>();
+            resourceList = new ArrayList<JsonArrayEntry>();
             for (LwM2mResource resource : instance.getResources().values()) {
                 // Validate request path & compute resource path
                 String prefixPath;
@@ -149,7 +149,7 @@ public class LwM2mNodeJsonEncoder {
             // get type for this resource
             ResourceModel rSpec = model.getResourceModel(objectId, resource.getId());
             Type expectedType = rSpec != null ? rSpec.type : resource.getType();
-            ArrayList<JsonArrayEntry> resourcesList = new ArrayList<>();
+            ArrayList<JsonArrayEntry> resourcesList = new ArrayList<JsonArrayEntry>();
 
             // create JSON resource element
             if (resource.isMultiInstances()) {

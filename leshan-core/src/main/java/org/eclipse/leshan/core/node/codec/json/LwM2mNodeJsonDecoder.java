@@ -94,7 +94,7 @@ public class LwM2mNodeJsonDecoder {
             baseName = path; // if no base name, use request path as base name
 
         // fill time-stamped nodes collection
-        List<TimestampedLwM2mNode> timestampedNodes = new ArrayList<>();
+        List<TimestampedLwM2mNode> timestampedNodes = new ArrayList<TimestampedLwM2mNode>();
         for (Entry<Long, Collection<JsonArrayEntry>> entryByTimestamp : jsonEntryByTimestamp.entrySet()) {
 
             // Group JSON entry by instance
@@ -104,7 +104,7 @@ public class LwM2mNodeJsonDecoder {
             // Create lwm2m node
             LwM2mNode node;
             if (nodeClass == LwM2mObject.class) {
-                Collection<LwM2mObjectInstance> instances = new ArrayList<>();
+                Collection<LwM2mObjectInstance> instances = new ArrayList<LwM2mObjectInstance>();
                 for (Entry<Integer, Collection<JsonArrayEntry>> entryByInstanceId : jsonEntryByInstanceId.entrySet()) {
                     Map<Integer, LwM2mResource> resourcesMap = extractLwM2mResources(entryByInstanceId.getValue(),
                             baseName, model);
@@ -179,7 +179,7 @@ public class LwM2mNodeJsonDecoder {
      * @return a map (relativeTimestamp => collection of JsonArrayEntry)
      */
     private static SortedMap<Long, Collection<JsonArrayEntry>> groupJsonEntryByTimestamp(JsonRootObject jsonObject) {
-        SortedMap<Long, Collection<JsonArrayEntry>> result = new TreeMap<>(new Comparator<Long>() {
+        SortedMap<Long, Collection<JsonArrayEntry>> result = new TreeMap<Long, Collection<JsonArrayEntry>>(new Comparator<Long>() {
             @Override
             public int compare(Long o1, Long o2) {
                 // comparator which
@@ -196,7 +196,7 @@ public class LwM2mNodeJsonDecoder {
             // Get jsonArray for this time-stamp
             Collection<JsonArrayEntry> jsonArray = result.get(time);
             if (jsonArray == null) {
-                jsonArray = new ArrayList<>();
+                jsonArray = new ArrayList<JsonArrayEntry>();
                 result.put(time, jsonArray);
             }
 
@@ -222,7 +222,7 @@ public class LwM2mNodeJsonDecoder {
      */
     private static Map<Integer, Collection<JsonArrayEntry>> groupJsonEntryByInstanceId(
             Collection<JsonArrayEntry> jsonEntries, LwM2mPath baseName) throws CodecException {
-        Map<Integer, Collection<JsonArrayEntry>> result = new HashMap<>();
+        Map<Integer, Collection<JsonArrayEntry>> result = new HashMap<Integer, Collection<JsonArrayEntry>>();
 
         for (JsonArrayEntry e : jsonEntries) {
             // Build resource path
@@ -238,7 +238,7 @@ public class LwM2mNodeJsonDecoder {
             // Get jsonArray for this instance
             Collection<JsonArrayEntry> jsonArray = result.get(nodePath.getObjectInstanceId());
             if (jsonArray == null) {
-                jsonArray = new ArrayList<>();
+                jsonArray = new ArrayList<JsonArrayEntry>();
                 result.put(nodePath.getObjectInstanceId(), jsonArray);
             }
 
@@ -290,8 +290,8 @@ public class LwM2mNodeJsonDecoder {
             return Collections.emptyMap();
 
         // Extract LWM2M resources from JSON resource list
-        Map<Integer, LwM2mResource> lwM2mResourceMap = new HashMap<>();
-        Map<LwM2mPath, Map<Integer, JsonArrayEntry>> multiResourceMap = new HashMap<>();
+        Map<Integer, LwM2mResource> lwM2mResourceMap = new HashMap<Integer, LwM2mResource>();
+        Map<LwM2mPath, Map<Integer, JsonArrayEntry>> multiResourceMap = new HashMap<LwM2mPath, Map<Integer, JsonArrayEntry>>();
         for (JsonArrayEntry resourceElt : jsonArrayEntries) {
 
             // Build resource path
@@ -306,7 +306,7 @@ public class LwM2mNodeJsonDecoder {
                         nodePath.getResourceId());
                 Map<Integer, JsonArrayEntry> multiResource = multiResourceMap.get(resourcePath);
                 if (multiResource == null) {
-                    multiResource = new HashMap<>();
+                    multiResource = new HashMap<Integer, JsonArrayEntry>();
                     multiResourceMap.put(resourcePath, multiResource);
                 }
                 JsonArrayEntry previousResInstance = multiResource.put(nodePath.getResourceInstanceId(), resourceElt);
@@ -339,7 +339,7 @@ public class LwM2mNodeJsonDecoder {
 
             if (jsonEntries != null && !jsonEntries.isEmpty()) {
                 Type expectedType = getResourceType(resourcePath, model, jsonEntries.values().iterator().next());
-                Map<Integer, Object> values = new HashMap<>();
+                Map<Integer, Object> values = new HashMap<Integer, Object>();
                 for (Entry<Integer, JsonArrayEntry> e : jsonEntries.entrySet()) {
                     Integer resourceInstanceId = e.getKey();
                     values.put(resourceInstanceId,

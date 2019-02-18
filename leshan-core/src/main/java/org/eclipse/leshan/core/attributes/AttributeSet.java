@@ -32,7 +32,7 @@ import java.util.Map;
  */
 public class AttributeSet {
 
-    private final Map<String, Attribute> attributeMap = new LinkedHashMap<>();
+    private final Map<String, Attribute> attributeMap = new LinkedHashMap<String, Attribute>();
 
     public AttributeSet(Attribute... attributes) {
         this(Arrays.asList(attributes));
@@ -74,7 +74,7 @@ public class AttributeSet {
      * @return a new {@link AttributeSet} containing the filtered attributes
      */
     public AttributeSet filter(Attachment attachment) {
-        List<Attribute> attrs = new ArrayList<>();
+        List<Attribute> attrs = new ArrayList<Attribute>();
         for (Attribute attr : getAttributes()) {
             if (attr.getAttachment() == attachment) {
                 attrs.add(attr);
@@ -92,7 +92,7 @@ public class AttributeSet {
      * @return the merged AttributeSet
      */
     public AttributeSet merge(AttributeSet attributes) {
-        Map<String, Attribute> merged = new LinkedHashMap<>();
+        Map<String, Attribute> merged = new LinkedHashMap<String, Attribute>();
         for (Attribute attr : getAttributes()) {
             merged.put(attr.getCoRELinkParam(), attr);
         }
@@ -110,7 +110,7 @@ public class AttributeSet {
      * @return the attributes map
      */
     public Map<String, Object> getMap() {
-        Map<String, Object> result = new LinkedHashMap<>();
+        Map<String, Object> result = new LinkedHashMap<String, Object>();
         for (Attribute attr : attributeMap.values()) {
             result.put(attr.getCoRELinkParam(), attr.getValue());
         }
@@ -122,7 +122,7 @@ public class AttributeSet {
     }
 
     public String[] toQueryParams() {
-        List<String> queries = new LinkedList<>();
+        List<String> queries = new LinkedList<String>();
         for (Attribute attr : attributeMap.values()) {
             queries.add(String.format("%s=%s", attr.getCoRELinkParam(), attr.getValue()));
         }
@@ -196,7 +196,7 @@ public class AttributeSet {
      * </pre>
      */
     public static AttributeSet parse(Collection<String> queryParams) {
-        ArrayList<Attribute> attributes = new ArrayList<>();
+        ArrayList<Attribute> attributes = new ArrayList<Attribute>();
 
         for (String param : queryParams) {
             String[] keyAndValue = param.split("=");
