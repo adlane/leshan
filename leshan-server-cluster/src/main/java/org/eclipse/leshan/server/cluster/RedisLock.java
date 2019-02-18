@@ -48,7 +48,7 @@ public class RedisLock {
 
         // setnx with a 500ms expiration
         while (!"OK".equals(j.set(lockKey, randomLockValue, NX_OPTION, PX_OPTION, 500))) {
-            if (System.currentTimeMillis() - start > 5_000L)
+            if (System.currentTimeMillis() - start > 5000L)
                 throw new IllegalStateException("Could not acquire a lock from redis");
             try {
                 Thread.sleep(10);
