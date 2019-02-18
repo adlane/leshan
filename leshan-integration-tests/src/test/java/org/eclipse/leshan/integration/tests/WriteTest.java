@@ -470,7 +470,7 @@ public class WriteTest {
 
     @Test
     public void can_write_multi_instance_objlnk_resource_in_tlv() throws InterruptedException {
-        Map<Integer, ObjectLink> neighbourCellReport = new HashMap<>();
+        Map<Integer, ObjectLink> neighbourCellReport = new HashMap<Integer, ObjectLink>();
         neighbourCellReport.put(0, new ObjectLink(10245, 1));
         neighbourCellReport.put(1, new ObjectLink(10242, 2));
         neighbourCellReport.put(2, new ObjectLink(10244, 3));

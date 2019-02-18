@@ -117,10 +117,10 @@ public class RegistrationTest {
         helper.client.stop(false);
 
         // Send multiple reads which should be retransmitted.
-        List<Callback<ReadResponse>> callbacks = new ArrayList<>();
+        List<Callback<ReadResponse>> callbacks = new ArrayList<Callback<ReadResponse>>();
 
         for (int index = 0; index < 4; ++index) {
-            Callback<ReadResponse> callback = new Callback<>();
+            Callback<ReadResponse> callback = new Callback<ReadResponse>();
             helper.server.send(helper.getCurrentRegistration(), new ReadRequest(3, 0, 1), callback, callback);
             callbacks.add(callback);
         }
@@ -246,7 +246,7 @@ public class RegistrationTest {
                 ContentFormat.DEFAULT);
         ObjectEnabler objectEnabler2 = new ObjectEnabler(1, null, new HashMap<Integer, LwM2mInstanceEnabler>(), null,
                 ContentFormat.DEFAULT);
-        ArrayList<LwM2mObjectEnabler> objects = new ArrayList<>();
+        ArrayList<LwM2mObjectEnabler> objects = new ArrayList<LwM2mObjectEnabler>();
         objects.add(objectEnabler);
         objects.add(objectEnabler2);
         helper.client = new LeshanClientBuilder("test").setObjects(objects).build();
@@ -255,7 +255,7 @@ public class RegistrationTest {
     @Test
     public void register_with_additional_attributes() throws InterruptedException {
         // Create client with additional attributes
-        Map<String, String> additionalAttributes = new HashMap<>();
+        Map<String, String> additionalAttributes = new HashMap<String, String>();
         additionalAttributes.put("key1", "value1");
         additionalAttributes.put("imei", "2136872368");
         helper.createClient(additionalAttributes);
