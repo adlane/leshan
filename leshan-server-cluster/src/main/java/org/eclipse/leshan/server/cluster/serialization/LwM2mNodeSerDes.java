@@ -87,8 +87,7 @@ public class LwM2mNodeSerDes {
         String kind = o.getString("kind", null);
         int id = o.getInt("id", LwM2mObjectInstance.UNDEFINED);
 
-        switch (kind) {
-        case "object": {
+        if (kind.equals("object")) {
             Collection<LwM2mObjectInstance> instances = new ArrayList<LwM2mObjectInstance>();
             JsonArray jInstances = (JsonArray) o.get("instances");
             for (JsonValue jInstance : jInstances) {
@@ -96,8 +95,7 @@ public class LwM2mNodeSerDes {
                 instances.add(instance);
             }
             return new LwM2mObject(id, instances);
-        }
-        case "instance": {
+        } else if (kind.equals("instance")) {
             Collection<LwM2mResource> resources = new ArrayList<LwM2mResource>();
             JsonObject jResources = (JsonObject) o.get("resources");
             for (Member jResource : jResources) {
@@ -105,16 +103,14 @@ public class LwM2mNodeSerDes {
                 resources.add(resource);
             }
             return new LwM2mObjectInstance(id, resources);
-        }
-        case "singleResource": {
+        } else if (kind.equals("singleResource")) {
             String jType = o.getString("type", null);
             if (jType == null)
                 throw new IllegalStateException("Invalid LwM2mNode missing type attribute");
             Type type = Enum.valueOf(Type.class, jType);
             Object value = ValueSerDes.deserialize(o.get("value"), type);
             return LwM2mSingleResource.newResource(id, value, type);
-        }
-        case "multipleResource": {
+        } else if (kind.equals("multipleResource")) {
             String jType = o.getString("type", null);
             if (jType == null)
                 throw new IllegalStateException("Invalid LwM2mNode missing type attribute");
@@ -129,8 +125,7 @@ public class LwM2mNodeSerDes {
             }
 
             return LwM2mMultipleResource.newResource(id, values, type);
-        }
-        default:
+        } else {
             throw new IllegalStateException("Invalid LwM2mNode missing kind attribute");
         }
     }
