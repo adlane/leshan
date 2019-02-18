@@ -67,7 +67,7 @@ public class RegistrationHandler {
         // We must check if the client is using the right identity.
         final Registration registration = authorizer.isAuthorized(registerRequest, builder.build(), sender);
         if (registration == null) {
-            return new SendableResponse<>(RegisterResponse.forbidden(null));
+            return new SendableResponse<RegisterResponse>(RegisterResponse.forbidden(null));
         }
 
         // Add registration to the store
@@ -89,7 +89,7 @@ public class RegistrationHandler {
             }
         };
 
-        return new SendableResponse<>(RegisterResponse.success(registration.getId()), whenSent);
+        return new SendableResponse<RegisterResponse>(RegisterResponse.success(registration.getId()), whenSent);
     }
 
     public SendableResponse<UpdateResponse> update(Identity sender, UpdateRequest updateRequest) {
@@ -97,13 +97,13 @@ public class RegistrationHandler {
         // We must check if the client is using the right identity.
         Registration registration = registrationService.getById(updateRequest.getRegistrationId());
         if (registration == null) {
-            return new SendableResponse<>(UpdateResponse.notFound());
+            return new SendableResponse<UpdateResponse>(UpdateResponse.notFound());
         }
 
         if (authorizer.isAuthorized(updateRequest, registration, sender) == null) {
             // TODO replace by Forbidden if https://github.com/OpenMobileAlliance/OMA_LwM2M_for_Developers/issues/181 is
             // closed.
-            return new SendableResponse<>(UpdateResponse.badRequest("forbidden"));
+            return new SendableResponse<UpdateResponse>(UpdateResponse.badRequest("forbidden"));
         }
 
         // Create update
@@ -115,7 +115,7 @@ public class RegistrationHandler {
         final UpdatedRegistration updatedRegistration = registrationService.getStore().updateRegistration(update);
         if (updatedRegistration == null) {
             LOG.debug("Invalid update:  registration {} not found", registration.getId());
-            return new SendableResponse<>(UpdateResponse.notFound());
+            return new SendableResponse<UpdateResponse>(UpdateResponse.notFound());
         } else {
             LOG.debug("Updated registration {} by {}", updatedRegistration, update);
             // Create callback to notify registration update
@@ -126,7 +126,7 @@ public class RegistrationHandler {
                             updatedRegistration.getPreviousRegistration());
                 };
             };
-            return new SendableResponse<>(UpdateResponse.success(), whenSent);
+            return new SendableResponse<UpdateResponse>(UpdateResponse.success(), whenSent);
         }
     }
 
@@ -135,12 +135,12 @@ public class RegistrationHandler {
         // We must check if the client is using the right identity.
         Registration registration = registrationService.getById(deregisterRequest.getRegistrationId());
         if (registration == null) {
-            return new SendableResponse<>(DeregisterResponse.notFound());
+            return new SendableResponse<DeregisterResponse>(DeregisterResponse.notFound());
         }
         if (authorizer.isAuthorized(deregisterRequest, registration, sender) == null) {
             // TODO replace by Forbidden if https://github.com/OpenMobileAlliance/OMA_LwM2M_for_Developers/issues/181 is
             // closed.
-            return new SendableResponse<>(DeregisterResponse.badRequest("forbidden"));
+            return new SendableResponse<DeregisterResponse>(DeregisterResponse.badRequest("forbidden"));
         }
 
         final Deregistration deregistration = registrationService.getStore()
@@ -156,10 +156,10 @@ public class RegistrationHandler {
                             deregistration.getObservations(), null);
                 };
             };
-            return new SendableResponse<>(DeregisterResponse.success(), whenSent);
+            return new SendableResponse<DeregisterResponse>(DeregisterResponse.success(), whenSent);
         } else {
             LOG.debug("Invalid deregistration :  registration {} not found", registration.getId());
-            return new SendableResponse<>(DeregisterResponse.notFound());
+            return new SendableResponse<DeregisterResponse>(DeregisterResponse.notFound());
         }
     }
 

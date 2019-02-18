@@ -29,9 +29,9 @@ import org.eclipse.leshan.core.request.BindingMode;
 @SuppressWarnings("serial")
 public class BootstrapConfig implements Serializable {
 
-    public Map<Integer, ServerConfig> servers = new HashMap<>();
+    public Map<Integer, ServerConfig> servers = new HashMap<Integer, ServerConfig>();
 
-    public Map<Integer, ServerSecurity> security = new HashMap<>();
+    public Map<Integer, ServerSecurity> security = new HashMap<Integer, ServerSecurity>();
 
     /** server configuration (object 1) */
     static public class ServerConfig implements Serializable {

@@ -118,7 +118,7 @@ public class BootstrapHandler {
             @Override
             public void onResponse(BootstrapDeleteResponse response) {
                 LOG.trace("Bootstrap delete {} return code {}", session.getEndpoint(), response.getCode());
-                List<Integer> toSend = new ArrayList<>(cfg.security.keySet());
+                List<Integer> toSend = new ArrayList<Integer>(cfg.security.keySet());
                 sendBootstrap(session, cfg, toSend);
             }
         }, new ErrorCallback() {
@@ -159,7 +159,7 @@ public class BootstrapHandler {
             });
         } else {
             // we are done, send the servers
-            List<Integer> serversToSend = new ArrayList<>(cfg.servers.keySet());
+            List<Integer> serversToSend = new ArrayList<Integer>(cfg.servers.keySet());
             sendServers(session, cfg, serversToSend);
         }
     }
@@ -220,7 +220,7 @@ public class BootstrapHandler {
     }
 
     private LwM2mObjectInstance convertToSecurityInstance(int instanceId, ServerSecurity securityConfig) {
-        Collection<LwM2mResource> resources = new ArrayList<>();
+        Collection<LwM2mResource> resources = new ArrayList<LwM2mResource>();
 
         if (securityConfig.uri != null)
             resources.add(LwM2mSingleResource.newStringResource(0, securityConfig.uri));
@@ -252,7 +252,7 @@ public class BootstrapHandler {
     }
 
     private LwM2mObjectInstance convertToServerInstance(int instanceId, ServerConfig serverConfig) {
-        Collection<LwM2mResource> resources = new ArrayList<>();
+        Collection<LwM2mResource> resources = new ArrayList<LwM2mResource>();
 
         resources.add(LwM2mSingleResource.newIntegerResource(0, serverConfig.shortId));
         resources.add(LwM2mSingleResource.newIntegerResource(1, serverConfig.lifetime));
