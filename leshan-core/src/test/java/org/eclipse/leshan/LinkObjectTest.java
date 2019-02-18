@@ -31,7 +31,7 @@ public class LinkObjectTest {
         Assert.assertEquals(5, parse.length);
         Assert.assertEquals("/", parse[0].getUrl());
 
-        Map<String, Object> attResult = new HashMap<>();
+        Map<String, Object> attResult = new HashMap<String, Object>();
         attResult.put("rt", "oma.lwm2m");
         attResult.put("ct", 100);
         Assert.assertEquals(attResult, parse[0].getAttributes());
@@ -46,7 +46,7 @@ public class LinkObjectTest {
         Assert.assertEquals(Collections.EMPTY_MAP, parse[3].getAttributes());
         Assert.assertEquals("/2/1", parse[4].getUrl());
 
-        attResult = new HashMap<>();
+        attResult = new HashMap<String, Object>();
         attResult.put("empty", null);
         Assert.assertEquals(attResult, parse[4].getAttributes());
     }
@@ -58,7 +58,7 @@ public class LinkObjectTest {
         Assert.assertEquals(1, parse.length);
         Assert.assertEquals("/", parse[0].getUrl());
 
-        Map<String, String> attResult = new HashMap<>();
+        Map<String, String> attResult = new HashMap<String, String>();
         attResult.put("k1", "quotes\"inside");
         attResult.put("k2", "endwithquotes\"");
         attResult.put("k3", "noquotes");
@@ -80,15 +80,15 @@ public class LinkObjectTest {
 
     @Test
     public void serialyse_with_attributes() {
-        HashMap<String, Object> attributesObj1 = new HashMap<>();
+        HashMap<String, Object> attributesObj1 = new HashMap<String, Object>();
         attributesObj1.put("number", 12);
         Link obj1 = new Link("/1/0/1", attributesObj1);
 
-        HashMap<String, Object> attributesObj2 = new HashMap<>();
+        HashMap<String, Object> attributesObj2 = new HashMap<String, Object>();
         attributesObj2.put("string", "stringval");
         Link obj2 = new Link("/2/1", attributesObj2);
 
-        HashMap<String, Object> attributesObj3 = new HashMap<>();
+        HashMap<String, Object> attributesObj3 = new HashMap<String, Object>();
         attributesObj3.put("empty", null);
         Link obj3 = new Link("/3", attributesObj3);
 
@@ -100,7 +100,7 @@ public class LinkObjectTest {
 
     @Test
     public void serialyse_with_root_url() {
-        HashMap<String, Object> attributesObj1 = new HashMap<>();
+        HashMap<String, Object> attributesObj1 = new HashMap<String, Object>();
         attributesObj1.put("number", 12);
         Link obj1 = new Link("/", attributesObj1);
 
@@ -112,13 +112,13 @@ public class LinkObjectTest {
 
     @Test
     public void serialyse_then_parse_with_severals_attributes() {
-        HashMap<String, Object> attributesObj1 = new HashMap<>();
+        HashMap<String, Object> attributesObj1 = new HashMap<String, Object>();
         attributesObj1.put("number1", 1);
         attributesObj1.put("number2", 1);
         attributesObj1.put("string1", "stringval1");
         Link obj1 = new Link("/1/0", attributesObj1);
 
-        HashMap<String, Object> attributesObj2 = new HashMap<>();
+        HashMap<String, Object> attributesObj2 = new HashMap<String, Object>();
         attributesObj2.put("number3", 3);
         Link obj2 = new Link("/2", attributesObj2);
 

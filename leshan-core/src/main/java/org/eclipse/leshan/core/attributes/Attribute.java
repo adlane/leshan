@@ -62,7 +62,7 @@ public class Attribute {
     private static Map<String, AttributeModel> modelMap;
 
     static {
-        modelMap = new HashMap<>();
+        modelMap = new HashMap<String, AttributeModel>();
         modelMap.put(DIMENSION, new Attribute.AttributeModel(DIMENSION, Attachment.RESOURCE,
                 EnumSet.of(AssignationLevel.RESOURCE), AccessMode.R, Long.class));
         modelMap.put(OBJECT_VERSION, new Attribute.AttributeModel(OBJECT_VERSION, Attachment.OBJECT,

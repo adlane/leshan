@@ -61,7 +61,7 @@ public class DdfList2JsonGenerator {
 
         LOG.debug("Processing DDF list file {}", url);
 
-        List<String> ddfUrls = new ArrayList<>();
+        List<String> ddfUrls = new ArrayList<String>();
 
         try {
             DocumentBuilder builder = factory.newDocumentBuilder();

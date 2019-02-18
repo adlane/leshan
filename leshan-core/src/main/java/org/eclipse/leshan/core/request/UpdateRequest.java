@@ -60,7 +60,7 @@ public class UpdateRequest implements UplinkRequest<UpdateResponse> {
         if (additionalAttributes == null)
             this.additionalAttributes = Collections.emptyMap();
         else
-            this.additionalAttributes = Collections.unmodifiableMap(new HashMap<>(additionalAttributes));
+            this.additionalAttributes = Collections.unmodifiableMap(new HashMap<String, String>(additionalAttributes));
     }
 
     public String getRegistrationId() {

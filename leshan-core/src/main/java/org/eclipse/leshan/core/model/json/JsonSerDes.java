@@ -58,7 +58,7 @@ public abstract class JsonSerDes<T> {
     public abstract T deserialize(JsonObject o);
 
     public List<T> deserialize(JsonArray a) {
-        ArrayList<T> res = new ArrayList<>(a.size());
+        ArrayList<T> res = new ArrayList<T>(a.size());
         for (JsonValue v : a) {
             res.add(deserialize(v.asObject()));
         }

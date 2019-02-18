@@ -142,7 +142,7 @@ public class ObserveRequest extends AbstractDownlinkRequest<ObserveResponse> {
         if (context == null || context.isEmpty())
             this.context = Collections.emptyMap();
         else
-            this.context = Collections.unmodifiableMap(new HashMap<>(context));
+            this.context = Collections.unmodifiableMap(new HashMap<String, String>(context));
     }
 
     /**
