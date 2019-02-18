@@ -67,8 +67,14 @@ public class DdfList2JsonGenerator {
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document document;
             // Downloading using URLConnection for ability to set User-Agent
-            try (InputStream is = openConnection(new URL(url)).getInputStream()) {
+            InputStream is = null;
+            try {
+                is = openConnection(new URL(url)).getInputStream();
                 document = builder.parse(is, url);
+            } finally {
+                if (is != null) {
+                    is.close();
+                }
             }
 
             NodeList items = document.getDocumentElement().getElementsByTagName("Item");
@@ -98,8 +104,14 @@ public class DdfList2JsonGenerator {
 
             LOG.debug("Downloading DDF file {} to {}", ddfUrl, outPath);
 
-            try (InputStream in = openConnection(parsedUrl).getInputStream()) {
+            InputStream in = null;
+            try {
+                in = openConnection(parsedUrl).getInputStream();
                 Files.copy(in, outPath);
+            } finally {
+                if (in != null) {
+                    in.close();
+                }
             }
         }
     }
@@ -125,8 +137,14 @@ public class DdfList2JsonGenerator {
 
         // generate object spec file
         Ddf2JsonGenerator ddfJsonGenerator = new Ddf2JsonGenerator();
-        try (FileOutputStream fileOutputStream = new FileOutputStream(outputPath)) {
+        FileOutputStream fileOutputStream = null;
+        try {
+            fileOutputStream = new FileOutputStream(outputPath);
             ddfJsonGenerator.generate(new File(ddfFilesPath), fileOutputStream);
+        } finally {
+            if (fileOutputStream != null) {
+                fileOutputStream.close();
+            }
         }
     }
 }

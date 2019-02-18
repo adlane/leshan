@@ -48,7 +48,9 @@ public class DDFFileParser {
     }
 
     public List<ObjectModel> parse(File ddfFile) {
-        try (InputStream input = new FileInputStream(ddfFile)) {
+        InputStream input = null;
+        try {
+            input = new FileInputStream(ddfFile);
             return parse(input, ddfFile.getName());
         } catch (Exception e) {
             LOG.error("Could not parse the resource definition file " + ddfFile.getName(), e);
