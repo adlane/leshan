@@ -141,7 +141,7 @@ public class DownlinkRequestSerDes {
             int format = o.getInt("contentFormat", ContentFormat.TLV.getCode());
             int instanceId = o.getInt("instanceId", LwM2mObjectInstance.UNDEFINED);
 
-            Collection<LwM2mResource> resources = new ArrayList<>();
+            Collection<LwM2mResource> resources = new ArrayList<LwM2mResource>();
             JsonArray jResources = (JsonArray) o.get("resources");
             for (JsonValue jResource : jResources) {
                 LwM2mResource resource = (LwM2mResource) LwM2mNodeSerDes.deserialize((JsonObject) jResource);

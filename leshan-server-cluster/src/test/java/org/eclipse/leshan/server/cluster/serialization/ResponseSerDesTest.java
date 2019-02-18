@@ -32,7 +32,7 @@ public class ResponseSerDesTest {
     @Test
     public void ser_and_des_discover_response() throws Exception {
         Link[] objs = new Link[2];
-        Map<String, Object> att = new HashMap<>();
+        Map<String, Object> att = new HashMap<String, Object>();
         att.put("ts", 12);
         att.put("rt", "test");
         objs[0] = new Link("/0/1024/2", att);

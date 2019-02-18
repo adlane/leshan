@@ -79,7 +79,7 @@ public class RedisSecurityStore implements EditableSecurityStore {
     public Collection<SecurityInfo> getAll() {
         try (Jedis j = pool.getResource()) {
             ScanParams params = new ScanParams().match(SEC_EP + "*").count(100);
-            Collection<SecurityInfo> list = new LinkedList<>();
+            Collection<SecurityInfo> list = new LinkedList<SecurityInfo>();
             String cursor = "0";
             do {
                 ScanResult<byte[]> res = j.scan(cursor.getBytes(), params);
