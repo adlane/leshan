@@ -57,7 +57,8 @@ public class DefaultLwM2mValueConverter implements LwM2mValueConverter {
             case FLOAT:
                 LOG.debug("Trying to convert float value {} to integer", value);
                 Long longValue = ((Double) value).longValue();
-                if ((double) value == longValue.doubleValue()) {
+                double v = ((Double)value).doubleValue();
+                if (v == longValue.doubleValue()) {
                     return longValue;
                 }
             default:
@@ -69,7 +70,8 @@ public class DefaultLwM2mValueConverter implements LwM2mValueConverter {
             case INTEGER:
                 LOG.debug("Trying to convert integer value {} to float", value);
                 Double floatValue = ((Long) value).doubleValue();
-                if ((long) value == floatValue.longValue()) {
+                long v = ((Long)value).longValue();
+                if (v == floatValue.longValue()) {
                     return floatValue;
                 }
             default:
