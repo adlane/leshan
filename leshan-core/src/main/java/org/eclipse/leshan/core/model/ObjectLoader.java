@@ -113,7 +113,11 @@ public class ObjectLoader {
                     throw new IllegalStateException(String.format("Unable to load model %s", fullpath), e);
                 } finally {
                     if (reader != null) {
-                        reader.close();
+                        try {
+                            reader.close();
+                        } catch (IOException e) {
+                            LOG.warn(MessageFormat.format("Unable to load model {0}", fullpath), e);
+                        }
                     }
                 }
             } else {
@@ -143,7 +147,11 @@ public class ObjectLoader {
                     throw new IllegalStateException(String.format("Unable to load model %s", path), e);
                 } finally {
                     if (reader != null) {
-                        reader.close();
+                        try {
+                            reader.close();
+                        } catch (IOException e) {
+                            LOG.warn(MessageFormat.format("Unable to load model {0}", path), e);
+                        }
                     }
                 }
             } else {
@@ -182,7 +190,11 @@ public class ObjectLoader {
                                 e);
                     } finally {
                         if (input != null) {
-                            input.close();
+                            try {
+                                input.close();
+                            } catch (IOException e) {
+                                LOG.warn(MessageFormat.format("Unable to load object models for {0}", file.getAbsolutePath()), e);
+                            }
                         }
                     }
 
@@ -198,7 +210,11 @@ public class ObjectLoader {
                                 e);
                    } finally {
                         if (input != null) {
-                            input.close();
+                            try {
+                                input.close();
+                            } catch (IOException e) {
+                                LOG.warn(MessageFormat.format("Unable to load object models for {0}", file.getAbsolutePath()), e);
+                            }
                         }
                     }
                 }
