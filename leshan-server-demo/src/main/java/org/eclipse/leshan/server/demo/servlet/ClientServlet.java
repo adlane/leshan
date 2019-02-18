@@ -105,7 +105,7 @@ public class ClientServlet extends HttpServlet {
 
         // all registered clients
         if (req.getPathInfo() == null) {
-            Collection<Registration> registrations = new ArrayList<>();
+            Collection<Registration> registrations = new ArrayList<Registration>();
             for (Iterator<Registration> iterator = server.getRegistrationService().getAllRegistrations(); iterator
                     .hasNext();) {
                 registrations.add(iterator.next());
