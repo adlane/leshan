@@ -48,19 +48,27 @@ public class RedisSecurityStore implements EditableSecurityStore {
 
     @Override
     public SecurityInfo getByEndpoint(String endpoint) {
-        try (Jedis j = pool.getResource()) {
+        Jedis j = null;
+        try {
+            j = pool.getResource();
             byte[] data = j.get((SEC_EP + endpoint).getBytes());
             if (data == null) {
                 return null;
             } else {
                 return deserialize(data);
             }
+        } finally {
+            if (j != null) {
+                j.close();
+            }
         }
     }
 
     @Override
     public SecurityInfo getByIdentity(String identity) {
-        try (Jedis j = pool.getResource()) {
+        Jedis j = null;
+        try {
+            j = pool.getResource();
             String ep = j.hget(PSKID_SEC, identity);
             if (ep == null) {
                 return null;
@@ -72,12 +80,18 @@ public class RedisSecurityStore implements EditableSecurityStore {
                     return deserialize(data);
                 }
             }
+        } finally {
+            if (j != null) {
+                j.close();
+            }
         }
     }
 
     @Override
     public Collection<SecurityInfo> getAll() {
-        try (Jedis j = pool.getResource()) {
+        Jedis j = null;
+        try {
+            j = pool.getResource();
             ScanParams params = new ScanParams().match(SEC_EP + "*").count(100);
             Collection<SecurityInfo> list = new LinkedList<SecurityInfo>();
             String cursor = "0";
@@ -90,13 +104,19 @@ public class RedisSecurityStore implements EditableSecurityStore {
                 cursor = res.getStringCursor();
             } while (!"0".equals(cursor));
             return list;
+        } finally {
+            if (j != null) {
+                j.close();
+            }
         }
     }
 
     @Override
     public SecurityInfo add(SecurityInfo info) throws NonUniqueSecurityInfoException {
         byte[] data = serialize(info);
-        try (Jedis j = pool.getResource()) {
+        Jedis j = null;
+        try {
+            j = pool.getResource();
             if (info.getIdentity() != null) {
                 // populate the secondary index (security info by PSK id)
                 String oldEndpoint = j.hget(PSKID_SEC, info.getIdentity());
@@ -114,12 +134,18 @@ public class RedisSecurityStore implements EditableSecurityStore {
             }
 
             return previous;
+        } finally {
+            if (j != null) {
+                j.close();
+            }
         }
     }
 
     @Override
     public SecurityInfo remove(String endpoint) {
-        try (Jedis j = pool.getResource()) {
+        Jedis j = null;
+        try {
+            j = pool.getResource();
             byte[] data = j.get((SEC_EP + endpoint).getBytes());
 
             if (data != null) {
@@ -129,6 +155,10 @@ public class RedisSecurityStore implements EditableSecurityStore {
                 }
                 j.del((SEC_EP + endpoint).getBytes());
                 return info;
+            }
+        } finally {
+            if (j != null) {
+                j.close();
             }
         }
         return null;
