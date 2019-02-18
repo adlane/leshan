@@ -66,7 +66,7 @@ public class ObservationServiceImpl implements ObservationService, NotificationL
     private Endpoint secureEndpoint;
     private Endpoint nonSecureEndpoint;
 
-    private final List<ObservationListener> listeners = new CopyOnWriteArrayList<>();
+    private final List<ObservationListener> listeners = new CopyOnWriteArrayList<ObservationListener>();
 
     /**
      * Creates an instance of {@link ObservationServiceImpl}
@@ -160,14 +160,14 @@ public class ObservationServiceImpl implements ObservationService, NotificationL
         if (registrationId == null)
             return Collections.emptySet();
 
-        return new HashSet<>(registrationStore.getObservations(registrationId));
+        return new HashSet<Observation>(registrationStore.getObservations(registrationId));
     }
 
     private Set<Observation> getObservations(String registrationId, String resourcePath) {
         if (registrationId == null || resourcePath == null)
             return Collections.emptySet();
 
-        Set<Observation> result = new HashSet<>();
+        Set<Observation> result = new HashSet<Observation>();
         LwM2mPath lwPath = new LwM2mPath(resourcePath);
         for (Observation obs : getObservations(registrationId)) {
             if (lwPath.equals(obs.getPath())) {

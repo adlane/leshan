@@ -70,7 +70,7 @@ public class CaliforniumLwM2mBootstrapRequestSender implements LwM2mBootstrapReq
                 Registration registration = new Registration.Builder("fakeregistrationid", endpointName, destination,
                         destination.isSecure() ? secureEndpoint.getAddress() : nonSecureEndpoint.getAddress()).build();
                 // Build LwM2m response
-                LwM2mResponseBuilder<T> lwm2mResponseBuilder = new LwM2mResponseBuilder<>(coapRequest, coapResponse,
+                LwM2mResponseBuilder<T> lwm2mResponseBuilder = new LwM2mResponseBuilder<T>(coapRequest, coapResponse,
                         registration, model, null, decoder);
                 request.accept(lwm2mResponseBuilder);
                 return lwm2mResponseBuilder.getResponse();
@@ -107,7 +107,7 @@ public class CaliforniumLwM2mBootstrapRequestSender implements LwM2mBootstrapReq
                         destination.isSecure() ? secureEndpoint.getAddress() : nonSecureEndpoint.getAddress()).build();
 
                 // Build LwM2m response
-                LwM2mResponseBuilder<T> lwm2mResponseBuilder = new LwM2mResponseBuilder<>(coapRequest, coapResponse,
+                LwM2mResponseBuilder<T> lwm2mResponseBuilder = new LwM2mResponseBuilder<T>(coapRequest, coapResponse,
                         registration, model, null, decoder);
                 request.accept(lwm2mResponseBuilder);
                 return lwm2mResponseBuilder.getResponse();
