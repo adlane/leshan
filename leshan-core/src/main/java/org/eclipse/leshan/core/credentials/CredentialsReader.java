@@ -43,8 +43,14 @@ public abstract class CredentialsReader<T> {
      * @see java.lang.ClassLoader#getResourceAsStream(String)
      */
     public T readFromResource(String resourcePath) throws IOException, GeneralSecurityException {
-        try (InputStream in = ClassLoader.getSystemResourceAsStream(resourcePath)) {
+        InputStream in = null;
+        try {
+            in = ClassLoader.getSystemResourceAsStream(resourcePath);
             return decode(in);
+        } finally {
+            if (in != null) {
+                in.close();
+            }
         }
     }
 
@@ -52,8 +58,14 @@ public abstract class CredentialsReader<T> {
      * Decode credential from byte array.
      */
     public T decode(byte[] bytes) throws IOException, GeneralSecurityException {
-        try (ByteArrayInputStream in = new ByteArrayInputStream(bytes)) {
+        ByteArrayInputStream in = null;
+        try {
+            in = new ByteArrayInputStream(bytes);
             return decode(in);
+        } finally {
+            if (in != null) {
+                in.close();
+            }
         }
     }
 
@@ -61,7 +73,9 @@ public abstract class CredentialsReader<T> {
      * Decode credential from an InputStream.
      */
     public T decode(InputStream in) throws IOException, GeneralSecurityException {
-        try (ByteArrayOutputStream buffer = new ByteArrayOutputStream()) {
+        ByteArrayOutputStream buffer = null;
+        try {
+            buffer = new ByteArrayOutputStream();
             int nRead;
             byte[] data = new byte[1024];
             while ((nRead = in.read(data, 0, data.length)) != -1) {
@@ -70,6 +84,10 @@ public abstract class CredentialsReader<T> {
             buffer.flush();
 
             return decode(buffer.toByteArray());
+        } finally {
+            if (buffer != null) {
+                buffer.close();
+            }
         }
     }
 }

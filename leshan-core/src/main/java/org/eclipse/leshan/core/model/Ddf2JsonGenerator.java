@@ -35,8 +35,14 @@ public class Ddf2JsonGenerator {
     static final String DEFAULT_OUTPUT_PATH = "src/main/resources/objectspec.json";
 
     private void generate(Collection<ObjectModel> objectModels, OutputStream output) throws IOException {
-        try (OutputStreamWriter outputStreamWriter = new OutputStreamWriter(output)) {
+        OutputStreamWriter outputStreamWriter = null;
+        try {
+            outputStreamWriter = new OutputStreamWriter(output);
             outputStreamWriter.write(new ObjectModelSerDes().sSerialize(objectModels));
+        } finally {
+            if (outputStreamWriter != null) {
+                outputStreamWriter.close();
+            }
         }
     }
 
@@ -87,8 +93,14 @@ public class Ddf2JsonGenerator {
 
         // generate object spec file
         Ddf2JsonGenerator ddfJsonGenerator = new Ddf2JsonGenerator();
-        try (FileOutputStream fileOutputStream = new FileOutputStream(outputPath)) {
+        FileOutputStream fileOutputStream = null;
+        try {
+            fileOutputStream = new FileOutputStream(outputPath);
             ddfJsonGenerator.generate(new File(ddfFilesPath), fileOutputStream);
+        } finally {
+            if (fileOutputStream != null) {
+                fileOutputStream.close();
+            }
         }
     }
 }
