@@ -60,7 +60,7 @@ public class SecurityObjectPskStore implements PskStore {
 
         LwM2mObject securities = (LwM2mObject) securityEnabler.read(SYSTEM, new ReadRequest(SECURITY)).getContent();
         for (LwM2mObjectInstance security : securities.getInstances().values()) {
-            long securityMode = (long) security.getResource(SEC_SECURITY_MODE).getValue();
+            long securityMode = (Long) security.getResource(SEC_SECURITY_MODE).getValue();
             if (securityMode == SecurityMode.PSK.code) // psk
             {
                 byte[] pskIdentity = (byte[]) security.getResource(SEC_PUBKEY_IDENTITY).getValue();
@@ -93,7 +93,7 @@ public class SecurityObjectPskStore implements PskStore {
 
         LwM2mObject securities = (LwM2mObject) securityEnabler.read(SYSTEM, new ReadRequest(SECURITY)).getContent();
         for (LwM2mObjectInstance security : securities.getInstances().values()) {
-            long securityMode = (long) security.getResource(SEC_SECURITY_MODE).getValue();
+            long securityMode = (Long) security.getResource(SEC_SECURITY_MODE).getValue();
             if (securityMode == SecurityMode.PSK.code) {
                 try {
                     URI uri = new URI((String) security.getResource(SEC_SERVER_URI).getValue());
