@@ -105,10 +105,16 @@ public class ObjectLoader {
             String fullpath = StringUtils.removeEnd(path, "/") + "/" + StringUtils.removeStart(filename, "/");
             InputStream input = ObjectLoader.class.getResourceAsStream(fullpath);
             if (input != null) {
-                try (Reader reader = new InputStreamReader(input)) {
-                    models.addAll(loadDdfFile(input, fullpath));
-                } catch (IOException e) {
+                Reader reader = null;
+                try {
+                  reader = new InputStreamReader(input);
+                  models.addAll(loadDdfFile(input, fullpath));
+                } catch (Exception e) {
                     throw new IllegalStateException(String.format("Unable to load model %s", fullpath), e);
+                } finally {
+                    if (reader != null) {
+                        reader.close();
+                    }
                 }
             } else {
                 throw new IllegalStateException(String.format("Unable to load model %s", fullpath));
@@ -129,10 +135,16 @@ public class ObjectLoader {
         for (String path : paths) {
             InputStream input = ObjectLoader.class.getResourceAsStream(path);
             if (input != null) {
-                try (Reader reader = new InputStreamReader(input)) {
+                Reader reader = null;
+                try {
+                    reader = new InputStreamReader(input);
                     models.addAll(loadDdfFile(input, path));
-                } catch (IOException e) {
+                } catch (Exception e) {
                     throw new IllegalStateException(String.format("Unable to load model %s", path), e);
+                } finally {
+                    if (reader != null) {
+                        reader.close();
+                    }
                 }
             } else {
                 throw new IllegalStateException(String.format("Unable to load model %s", path));
@@ -161,21 +173,33 @@ public class ObjectLoader {
                 if (file.getName().endsWith(".xml")) {
                     // from DDF file
                     LOG.debug("Loading object models from DDF file {}", file.getAbsolutePath());
-                    try (FileInputStream input = new FileInputStream(file)) {
+                    FileInputStream input = null;
+                    try {
+                        input = new FileInputStream(file);
                         models.addAll(loadDdfFile(input, file.getName()));
                     } catch (IOException e) {
                         LOG.warn(MessageFormat.format("Unable to load object models for {0}", file.getAbsolutePath()),
                                 e);
+                    } finally {
+                        if (input != null) {
+                            input.close();
+                        }
                     }
 
                 } else if (file.getName().endsWith(".json")) {
                     // from JSON file
                     LOG.debug("Loading object models from JSON file {}", file.getAbsolutePath());
-                    try (FileInputStream input = new FileInputStream(file)) {
+                    FileInputStream input = null;
+                    try {
+                        input = new FileInputStream(file);
                         models.addAll(loadJsonStream(input));
                     } catch (IOException e) {
                         LOG.warn(MessageFormat.format("Unable to load object models for {0}", file.getAbsolutePath()),
                                 e);
+                   } finally {
+                        if (input != null) {
+                            input.close();
+                        }
                     }
                 }
             }
