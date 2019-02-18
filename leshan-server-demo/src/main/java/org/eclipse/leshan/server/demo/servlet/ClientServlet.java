@@ -153,7 +153,9 @@ public class ClientServlet extends HttpServlet {
                     resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                     resp.getWriter().format("No registered client with id '%s'", clientEndpoint).flush();
                 }
-            } catch (RuntimeException | InterruptedException e) {
+            } catch (RuntimeException e) {
+                handleException(e, resp);
+            } catch (InterruptedException e) {
                 handleException(e, resp);
             }
             return;
@@ -178,7 +180,9 @@ public class ClientServlet extends HttpServlet {
                 resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 resp.getWriter().format("No registered client with id '%s'", clientEndpoint).flush();
             }
-        } catch (RuntimeException | InterruptedException e) {
+        } catch (RuntimeException e) {
+            handleException(e, resp);
+        } catch (InterruptedException e) {
             handleException(e, resp);
         }
     }
@@ -245,7 +249,9 @@ public class ClientServlet extends HttpServlet {
                 resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 resp.getWriter().format("No registered client with id '%s'", clientEndpoint).flush();
             }
-        } catch (RuntimeException | InterruptedException e) {
+        } catch (RuntimeException e) {
+            handleException(e, resp);
+        } catch (InterruptedException e) {
             handleException(e, resp);
         }
     }
@@ -278,7 +284,9 @@ public class ClientServlet extends HttpServlet {
                     resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                     resp.getWriter().format("no registered client with id '%s'", clientEndpoint).flush();
                 }
-            } catch (RuntimeException | InterruptedException e) {
+            } catch (RuntimeException e) {
+                handleException(e, resp);
+            } catch (InterruptedException e) {
                 handleException(e, resp);
             }
             return;
@@ -298,7 +306,9 @@ public class ClientServlet extends HttpServlet {
                     resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                     resp.getWriter().format("no registered client with id '%s'", clientEndpoint).flush();
                 }
-            } catch (RuntimeException | InterruptedException e) {
+            } catch (RuntimeException e) {
+                handleException(e, resp);
+            } catch (InterruptedException e) {
                 handleException(e, resp);
             }
             return;
@@ -328,7 +338,9 @@ public class ClientServlet extends HttpServlet {
                     resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                     resp.getWriter().format("no registered client with id '%s'", clientEndpoint).flush();
                 }
-            } catch (RuntimeException | InterruptedException e) {
+            } catch (RuntimeException e) {
+                handleException(e, resp);
+            } catch (InterruptedException e) {
                 handleException(e, resp);
             }
             return;
@@ -370,7 +382,9 @@ public class ClientServlet extends HttpServlet {
                 resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 resp.getWriter().format("no registered client with id '%s'", clientEndpoint).flush();
             }
-        } catch (RuntimeException | InterruptedException e) {
+        } catch (RuntimeException e) {
+            handleException(e, resp);
+        } catch (InterruptedException e) {
             handleException(e, resp);
         }
     }

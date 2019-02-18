@@ -95,8 +95,13 @@ public class SecurityDeserializer implements JsonDeserializer<SecurityInfo> {
                             parameterSpec);
 
                     key = KeyFactory.getInstance("EC").generatePublic(keySpec);
-                } catch (IllegalArgumentException | InvalidKeySpecException | NoSuchAlgorithmException
-                        | InvalidParameterSpecException e) {
+                } catch (IllegalArgumentException e) {
+                    throw new JsonParseException("Invalid security info content", e);
+                } catch (InvalidKeySpecException e) {
+                    throw new JsonParseException("Invalid security info content", e);
+                } catch (NoSuchAlgorithmException e) {
+                    throw new JsonParseException("Invalid security info content", e);
+                } catch (InvalidParameterSpecException e) {
                     throw new JsonParseException("Invalid security info content", e);
                 }
                 info = SecurityInfo.newRawPublicKeyInfo(endpoint, key);
