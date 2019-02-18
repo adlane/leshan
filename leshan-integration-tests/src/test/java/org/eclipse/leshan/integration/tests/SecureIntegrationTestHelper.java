@@ -128,8 +128,14 @@ public class SecureIntegrationTestHelper extends IntegrationTestHelper {
             // Get certificates from key store
             char[] clientKeyStorePwd = "client".toCharArray();
             KeyStore clientKeyStore = KeyStore.getInstance(KeyStore.getDefaultType());
-            try (FileInputStream clientKeyStoreFile = new FileInputStream("./credentials/clientKeyStore.jks")) {
+            FileInputStream clientKeyStoreFile = null;
+            try {
+                clientKeyStoreFile = new FileInputStream("./credentials/clientKeyStore.jks");
                 clientKeyStore.load(clientKeyStoreFile, clientKeyStorePwd);
+            } finally {
+                if (clientKeyStoreFile != null) {
+                    clientKeyStoreFile.close();
+                }
             }
 
             clientPrivateKeyFromCert = (PrivateKey) clientKeyStore.getKey("client", clientKeyStorePwd);
@@ -170,8 +176,14 @@ public class SecureIntegrationTestHelper extends IntegrationTestHelper {
             // Get certificates from key store
             char[] serverKeyStorePwd = "server".toCharArray();
             KeyStore serverKeyStore = KeyStore.getInstance(KeyStore.getDefaultType());
-            try (FileInputStream serverKeyStoreFile = new FileInputStream("./credentials/serverKeyStore.jks")) {
+            FileInputStream serverKeyStoreFile = null;
+            try {
+                serverKeyStoreFile = new FileInputStream("./credentials/serverKeyStore.jks");
                 serverKeyStore.load(serverKeyStoreFile, serverKeyStorePwd);
+            } finally {
+                if (serverKeyStoreFile!= null) {
+                    serverKeyStoreFile.close();
+                }
             }
 
             serverPrivateKeyFromCert = (PrivateKey) serverKeyStore.getKey("server", serverKeyStorePwd);
