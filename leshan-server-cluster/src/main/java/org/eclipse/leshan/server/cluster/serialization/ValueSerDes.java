@@ -31,11 +31,11 @@ public class ValueSerDes {
     public static JsonValue jSerialize(Object value, Type type) {
         switch (type) {
         case INTEGER:
-            return Json.value((long) value);
+            return Json.value((Long) value);
         case FLOAT:
-            return Json.value((double) value);
+            return Json.value((Double) value);
         case BOOLEAN:
-            return Json.value((boolean) value);
+            return Json.value((Boolean) value);
         case OPAQUE:
             return Json.value(Base64.encodeBase64String((byte[]) value));
         case STRING:

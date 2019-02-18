@@ -58,7 +58,7 @@ public class RegistrationUpdateSerDes {
                     if (e.getValue() == null) {
                         at.add(e.getKey(), Json.NULL);
                     } else if (e.getValue() instanceof Integer) {
-                        at.add(e.getKey(), (int) e.getValue());
+                        at.add(e.getKey(), (Integer) e.getValue());
                     } else {
                         at.add(e.getKey(), e.getValue().toString());
                     }
