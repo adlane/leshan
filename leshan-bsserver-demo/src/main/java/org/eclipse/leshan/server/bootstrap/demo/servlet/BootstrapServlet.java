@@ -114,7 +114,9 @@ public class BootstrapServlet extends HttpServlet {
                 bsStore.addConfig(endpoint, cfg);
                 resp.setStatus(HttpServletResponse.SC_OK);
             }
-        } catch (JsonSyntaxException | ConfigurationException e) {
+        } catch (JsonSyntaxException e) {
+            sendError(resp, HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
+        } catch (ConfigurationException e) {
             sendError(resp, HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
         }
     }
