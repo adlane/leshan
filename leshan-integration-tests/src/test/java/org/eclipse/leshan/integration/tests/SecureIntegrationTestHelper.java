@@ -137,7 +137,9 @@ public class SecureIntegrationTestHelper extends IntegrationTestHelper {
             clientX509CertWithBadCN = (X509Certificate) clientKeyStore.getCertificate("client_bad_cn");
             clientX509CertSelfSigned = (X509Certificate) clientKeyStore.getCertificate("client_self_signed");
             clientX509CertNotTrusted = (X509Certificate) clientKeyStore.getCertificate("client_not_trusted");
-        } catch (GeneralSecurityException | IOException e) {
+        } catch (GeneralSecurityException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
@@ -178,7 +180,9 @@ public class SecureIntegrationTestHelper extends IntegrationTestHelper {
             serverX509CertSelfSigned = (X509Certificate) serverKeyStore.getCertificate("server_self_signed");
             trustedCertificates[0] = rootCAX509Cert;
 
-        } catch (GeneralSecurityException | IOException e) {
+        } catch (GeneralSecurityException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }

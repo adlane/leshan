@@ -96,7 +96,9 @@ public class QueueModeIntegrationTestHelper extends IntegrationTestHelper {
     public void waitToSleep(long timeInMilliseconds) {
         try {
             presenceListener.waitForSleep(timeInMilliseconds, TimeUnit.MILLISECONDS);
-        } catch (InterruptedException | TimeoutException e) {
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (TimeoutException e) {
             throw new RuntimeException(e);
         }
     }
@@ -113,7 +115,9 @@ public class QueueModeIntegrationTestHelper extends IntegrationTestHelper {
                         "Client was not awake the expected among of time. expected : less than %dms, bu was %dms",
                         expectedTime, waitingTime));
             }
-        } catch (InterruptedException | TimeoutException e) {
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (TimeoutException e) {
             throw new RuntimeException(e);
         }
     }
@@ -121,7 +125,9 @@ public class QueueModeIntegrationTestHelper extends IntegrationTestHelper {
     public void waitToGetAwake(long timeInMilliseconds) {
         try {
             presenceListener.waitForAwake(timeInMilliseconds, TimeUnit.MILLISECONDS);
-        } catch (InterruptedException | TimeoutException e) {
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (TimeoutException e) {
             throw new RuntimeException(e);
         }
     }
