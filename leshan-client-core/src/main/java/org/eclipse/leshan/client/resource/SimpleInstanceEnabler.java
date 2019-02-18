@@ -35,7 +35,7 @@ import org.eclipse.leshan.core.response.WriteResponse;
 
 public class SimpleInstanceEnabler extends BaseInstanceEnabler {
 
-    protected Map<Integer, LwM2mResource> resources = new HashMap<>();
+    protected Map<Integer, LwM2mResource> resources = new HashMap<Integer, LwM2mResource>();
 
     public SimpleInstanceEnabler() {
     }

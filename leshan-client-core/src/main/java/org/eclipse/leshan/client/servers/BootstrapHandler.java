@@ -52,7 +52,7 @@ public class BootstrapHandler {
         if (bootstrapping) {
             // only if the request is from the bootstrap server
             if (!isBootstrapServer(identity)) {
-                return new SendableResponse<>(BootstrapFinishResponse.badRequest("not from a bootstrap server"));
+                return new SendableResponse<BootstrapFinishResponse>(BootstrapFinishResponse.badRequest("not from a bootstrap server"));
             }
             // TODO delete bootstrap server (see 5.2.5.2 Bootstrap Delete)
 
@@ -63,9 +63,9 @@ public class BootstrapHandler {
                 }
             };
 
-            return new SendableResponse<>(BootstrapFinishResponse.success(), whenSent);
+            return new SendableResponse<BootstrapFinishResponse>(BootstrapFinishResponse.success(), whenSent);
         } else {
-            return new SendableResponse<>(BootstrapFinishResponse.badRequest("no pending bootstrap session"));
+            return new SendableResponse<BootstrapFinishResponse>(BootstrapFinishResponse.badRequest("no pending bootstrap session"));
         }
     }
 

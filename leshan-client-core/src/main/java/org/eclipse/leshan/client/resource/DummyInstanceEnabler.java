@@ -58,7 +58,7 @@ public class DummyInstanceEnabler extends SimpleInstanceEnabler {
 
     @Override
     protected LwM2mMultipleResource initializeMultipleResource(ObjectModel objectModel, ResourceModel resourceModel) {
-        Map<Integer, Object> values = new HashMap<>();
+        Map<Integer, Object> values = new HashMap<Integer, Object>();
         switch (resourceModel.type) {
         case STRING:
             values.put(0, createDefaultStringValueFor(objectModel, resourceModel));

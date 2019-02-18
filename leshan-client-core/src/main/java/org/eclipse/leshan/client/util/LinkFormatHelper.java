@@ -41,19 +41,19 @@ public final class LinkFormatHelper {
     }
 
     public static Link[] getClientDescription(Collection<LwM2mObjectEnabler> objectEnablers, String rootPath) {
-        List<Link> links = new ArrayList<>();
+        List<Link> links = new ArrayList<Link>();
 
         // clean root path
         String root = rootPath == null ? "" : rootPath;
 
         // create links for "object"
         String rootURL = getPath("/", root);
-        Map<String, Object> attributes = new HashMap<>();
+        Map<String, Object> attributes = new HashMap<String, Object>();
         attributes.put("rt", "oma.lwm2m");
         links.add(new Link(rootURL, attributes));
 
         // sort resources
-        List<LwM2mObjectEnabler> objEnablerList = new ArrayList<>(objectEnablers);
+        List<LwM2mObjectEnabler> objEnablerList = new ArrayList<LwM2mObjectEnabler>(objectEnablers);
         Collections.sort(objEnablerList, new Comparator<LwM2mObjectEnabler>() {
             @Override
             public int compare(LwM2mObjectEnabler o1, LwM2mObjectEnabler o2) {
@@ -83,7 +83,7 @@ public final class LinkFormatHelper {
     }
 
     public static Link[] getObjectDescription(LwM2mObjectEnabler objectEnabler, String root) {
-        List<Link> links = new ArrayList<>();
+        List<Link> links = new ArrayList<Link>();
 
         // clean root path
         String rootPath = root == null ? "" : root;
@@ -102,7 +102,7 @@ public final class LinkFormatHelper {
     }
 
     public static Link[] getInstanceDescription(LwM2mObjectEnabler objectEnabler, int instanceId, String root) {
-        List<Link> links = new ArrayList<>();
+        List<Link> links = new ArrayList<Link>();
 
         // clean root path
         String rootPath = root == null ? "" : root;
@@ -196,7 +196,7 @@ public final class LinkFormatHelper {
         if (StringUtils.isEmpty(objectModel.version) || ObjectModel.DEFAULT_VERSION.equals(objectModel.version)) {
             return null;
         }
-        Map<String, String> attributes = new HashMap<>();
+        Map<String, String> attributes = new HashMap<String, String>();
         attributes.put("ver", objectModel.version);
         return attributes;
     }

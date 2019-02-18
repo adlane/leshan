@@ -103,7 +103,7 @@ public class RegistrationEngine {
         this.endpointsManager = endpointsManager;
         this.observer = observer;
         this.additionalAttributes = additionalAttributes;
-        this.registeredServers = new ConcurrentHashMap<>();
+        this.registeredServers = new ConcurrentHashMap<String, Server>();
 
         sender = requestSender;
     }
