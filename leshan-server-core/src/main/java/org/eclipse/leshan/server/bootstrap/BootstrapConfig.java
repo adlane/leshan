@@ -31,11 +31,11 @@ import org.eclipse.leshan.core.request.BindingMode;
 @SuppressWarnings("serial")
 public class BootstrapConfig implements Serializable {
 
-    public List<String> toDelete = new ArrayList<>();
+    public List<String> toDelete = new ArrayList<String>();
 
-    public Map<Integer, ServerConfig> servers = new HashMap<>();
+    public Map<Integer, ServerConfig> servers = new HashMap<Integer, ServerConfig>();
 
-    public Map<Integer, ServerSecurity> security = new HashMap<>();
+    public Map<Integer, ServerSecurity> security = new HashMap<Integer, ServerSecurity>();
 
     public Map<Integer, ACLConfig> acls = new HashMap<>();
 

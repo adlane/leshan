@@ -36,8 +36,8 @@ import org.eclipse.leshan.server.registration.Registration;
  */
 public final class PresenceServiceImpl implements PresenceService {
 
-    private final ConcurrentMap<String, PresenceStatus> clientStatusList = new ConcurrentHashMap<>();
-    private final List<PresenceListener> listeners = new CopyOnWriteArrayList<>();
+    private final ConcurrentMap<String, PresenceStatus> clientStatusList = new ConcurrentHashMap<String, PresenceStatus>();
+    private final List<PresenceListener> listeners = new CopyOnWriteArrayList<PresenceListener>();
     private final ClientAwakeTimeProvider awakeTimeProvider;
     private final ScheduledExecutorService clientTimersExecutor = Executors.newSingleThreadScheduledExecutor();
 

@@ -33,7 +33,7 @@ import org.eclipse.leshan.server.registration.RegistrationUpdate;
  */
 public class RegistrationServiceImpl implements RegistrationService, ExpirationListener {
 
-    private final List<RegistrationListener> listeners = new CopyOnWriteArrayList<>();
+    private final List<RegistrationListener> listeners = new CopyOnWriteArrayList<RegistrationListener>();
 
     private RegistrationStore store;
 
