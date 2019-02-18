@@ -30,9 +30,9 @@ import org.eclipse.leshan.util.Validate;
 
 public class ObjectsInitializer {
 
-    protected Map<Integer, LwM2mInstanceEnablerFactory> factories = new HashMap<>();
-    protected Map<Integer, LwM2mInstanceEnabler[]> instances = new HashMap<>();
-    protected Map<Integer, ContentFormat> defaultContentFormat = new HashMap<>();
+    protected Map<Integer, LwM2mInstanceEnablerFactory> factories = new HashMap<Integer, LwM2mInstanceEnablerFactory>();
+    protected Map<Integer, LwM2mInstanceEnabler[]> instances = new HashMap<Integer, LwM2mInstanceEnabler[]>();
+    protected Map<Integer, ContentFormat> defaultContentFormat = new HashMap<Integer, ContentFormat>();
     protected LwM2mModel model;
 
     public ObjectsInitializer() {
@@ -98,7 +98,7 @@ public class ObjectsInitializer {
      */
     public void setDummyInstancesForObject(int... objectIds) {
         // create a map (id => nb instances)
-        Map<Integer, Integer> idToNbInstance = new HashMap<>();
+        Map<Integer, Integer> idToNbInstance = new HashMap<Integer, Integer>();
         for (int objectid : objectIds) {
             // get current number of instance
             Integer nbInstance = idToNbInstance.get(objectid);
@@ -141,7 +141,7 @@ public class ObjectsInitializer {
      */
     public List<LwM2mObjectEnabler> createAll() {
         // collect object ids which is set
-        Set<Integer> ids = new HashSet<>();
+        Set<Integer> ids = new HashSet<Integer>();
         ids.addAll(factories.keySet());
         ids.addAll(instances.keySet());
 
@@ -187,7 +187,7 @@ public class ObjectsInitializer {
      * @see ObjectsInitializer#setInstancesForObject(int, LwM2mInstanceEnabler...)
      */
     public List<LwM2mObjectEnabler> create(int... objectId) {
-        List<LwM2mObjectEnabler> enablers = new ArrayList<>();
+        List<LwM2mObjectEnabler> enablers = new ArrayList<LwM2mObjectEnabler>();
         for (int anObjectId : objectId) {
             LwM2mObjectEnabler objectEnabler = create(anObjectId);
             if (objectEnabler != null)
@@ -222,7 +222,7 @@ public class ObjectsInitializer {
     }
 
     protected ObjectEnabler createNodeEnabler(ObjectModel objectModel) {
-        Map<Integer, LwM2mInstanceEnabler> instances = new HashMap<>();
+        Map<Integer, LwM2mInstanceEnabler> instances = new HashMap<Integer, LwM2mInstanceEnabler>();
         LwM2mInstanceEnabler[] newInstances = createInstances(objectModel);
         for (LwM2mInstanceEnabler instance : newInstances) {
             // set id if not already set

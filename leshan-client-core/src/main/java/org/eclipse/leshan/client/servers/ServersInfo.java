@@ -23,7 +23,7 @@ public class ServersInfo {
     public ServerInfo bootstrap;
 
     // <shortServerId, Info>
-    public Map<Long, DmServerInfo> deviceMangements = new HashMap<>();
+    public Map<Long, DmServerInfo> deviceMangements = new HashMap<Long, DmServerInfo>();
 
     @Override
     public String toString() {

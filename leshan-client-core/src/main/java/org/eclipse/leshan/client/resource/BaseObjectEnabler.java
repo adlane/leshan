@@ -81,7 +81,7 @@ public abstract class BaseObjectEnabler implements LwM2mObjectEnabler {
     @Override
     public List<Integer> getAvailableResourceIds(int instanceId) {
         // By default we consider that all resources defined in the model are supported
-        ArrayList<Integer> resourceIds = new ArrayList<>(objectModel.resources.keySet());
+        ArrayList<Integer> resourceIds = new ArrayList<Integer>(objectModel.resources.keySet());
         Collections.sort(resourceIds);
         return resourceIds;
     }
@@ -175,7 +175,7 @@ public abstract class BaseObjectEnabler implements LwM2mObjectEnabler {
                 // REPLACE
                 // check, if all mandatory writable resources are provided
                 // Collect all mandatory writable resource IDs from the model
-                Set<Integer> mandatoryResources = new HashSet<>();
+                Set<Integer> mandatoryResources = new HashSet<Integer>();
                 for (ResourceModel resourceModel : getObjectModel().resources.values()) {
                     if (resourceModel.mandatory && (LwM2mId.SECURITY == id || resourceModel.operations.isWritable()))
                         mandatoryResources.add(resourceModel.id);

@@ -103,9 +103,9 @@ public class LinkFormatHelperTest {
 
     @Test
     public void encode_client_description_with_version_1_0() {
-        List<LwM2mObjectEnabler> objectEnablers = new ArrayList<>();
+        List<LwM2mObjectEnabler> objectEnablers = new ArrayList<LwM2mObjectEnabler>();
 
-        Map<Integer, LwM2mInstanceEnabler> instancesMap = new HashMap<>();
+        Map<Integer, LwM2mInstanceEnabler> instancesMap = new HashMap<Integer, LwM2mInstanceEnabler>();
         instancesMap.put(0, new BaseInstanceEnabler());
         objectEnablers.add(new ObjectEnabler(6, getObjectModel(6), instancesMap, null, ContentFormat.DEFAULT));
 
@@ -117,9 +117,9 @@ public class LinkFormatHelperTest {
 
     @Test
     public void encode_client_description_with_version_2_0() {
-        List<LwM2mObjectEnabler> objectEnablers = new ArrayList<>();
+        List<LwM2mObjectEnabler> objectEnablers = new ArrayList<LwM2mObjectEnabler>();
 
-        Map<Integer, LwM2mInstanceEnabler> instancesMap = new HashMap<>();
+        Map<Integer, LwM2mInstanceEnabler> instancesMap = new HashMap<Integer, LwM2mInstanceEnabler>();
         instancesMap.put(0, new BaseInstanceEnabler());
         instancesMap.put(1, new BaseInstanceEnabler());
         objectEnablers.add(
@@ -133,9 +133,9 @@ public class LinkFormatHelperTest {
 
     @Test
     public void encode_client_description_with_version_2_0_no_instances() {
-        List<LwM2mObjectEnabler> objectEnablers = new ArrayList<>();
+        List<LwM2mObjectEnabler> objectEnablers = new ArrayList<LwM2mObjectEnabler>();
 
-        Map<Integer, LwM2mInstanceEnabler> instancesMap = new HashMap<>();
+        Map<Integer, LwM2mInstanceEnabler> instancesMap = new HashMap<Integer, LwM2mInstanceEnabler>();
         objectEnablers.add(
                 new ObjectEnabler(6, getVersionedObjectModel(6, "2.0"), instancesMap, null, ContentFormat.DEFAULT));
 
@@ -180,7 +180,7 @@ public class LinkFormatHelperTest {
         };
 
         // create first instance
-        Map<Integer, LwM2mInstanceEnabler> instances = new HashMap<>();
+        Map<Integer, LwM2mInstanceEnabler> instances = new HashMap<Integer, LwM2mInstanceEnabler>();
         LwM2mInstanceEnabler instance = factory.create();
         instance.setId(0);
         instance.setModel(objectModel);
