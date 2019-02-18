@@ -116,7 +116,7 @@ public class Registration implements Serializable {
         } else {
             // We create a new HashMap to have a real immutable map and to avoid "unmodifiableMap" encapsulation.
             this.additionalRegistrationAttributes = Collections
-                    .unmodifiableMap(new HashMap<>(additionalRegistrationAttributes));
+                    .unmodifiableMap(new HashMap<String, String>(additionalRegistrationAttributes));
         }
 
     }

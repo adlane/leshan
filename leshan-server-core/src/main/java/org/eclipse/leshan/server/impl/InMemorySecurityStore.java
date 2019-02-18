@@ -40,10 +40,10 @@ public class InMemorySecurityStore implements EditableSecurityStore {
     protected final Lock writeLock = readWriteLock.writeLock();
 
     // by client end-point
-    protected Map<String, SecurityInfo> securityByEp = new HashMap<>();
+    protected Map<String, SecurityInfo> securityByEp = new HashMap<String, SecurityInfo>();
 
     // by PSK identity
-    protected Map<String, SecurityInfo> securityByIdentity = new HashMap<>();
+    protected Map<String, SecurityInfo> securityByIdentity = new HashMap<String, SecurityInfo>();
 
     public InMemorySecurityStore() {
     }
@@ -78,7 +78,7 @@ public class InMemorySecurityStore implements EditableSecurityStore {
     public Collection<SecurityInfo> getAll() {
         readLock.lock();
         try {
-            return Collections.unmodifiableCollection(new ArrayList<>(securityByEp.values()));
+            return Collections.unmodifiableCollection(new ArrayList<SecurityInfo>(securityByEp.values()));
         } finally {
             readLock.unlock();
         }
