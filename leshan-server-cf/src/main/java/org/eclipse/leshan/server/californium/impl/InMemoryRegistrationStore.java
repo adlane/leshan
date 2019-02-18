@@ -65,11 +65,11 @@ public class InMemoryRegistrationStore implements CaliforniumRegistrationStore, 
     private final Logger LOG = LoggerFactory.getLogger(InMemoryRegistrationStore.class);
 
     // Data structure
-    private final Map<String /* end-point */, Registration> regsByEp = new HashMap<>();
-    private final Map<InetSocketAddress, Registration> regsByAddr = new HashMap<>();
-    private final Map<String /* reg-id */, Registration> regsByRegId = new HashMap<>();
-    private Map<Token, org.eclipse.californium.core.observe.Observation> obsByToken = new HashMap<>();
-    private Map<String, Set<Token>> tokensByRegId = new HashMap<>();
+    private final Map<String /* end-point */, Registration> regsByEp = new HashMap<String, Registration>();
+    private final Map<InetSocketAddress, Registration> regsByAddr = new HashMap<InetSocketAddress, Registration>();
+    private final Map<String /* reg-id */, Registration> regsByRegId = new HashMap<String, Registration>();
+    private Map<Token, org.eclipse.californium.core.observe.Observation> obsByToken = new HashMap<Token, org.eclipse.californium.core.observe.Observation>();
+    private Map<String, Set<Token>> tokensByRegId = new HashMap<String, Set<Token>>();
 
     private final ReadWriteLock lock = new ReentrantReadWriteLock();
 
@@ -184,7 +184,7 @@ public class InMemoryRegistrationStore implements CaliforniumRegistrationStore, 
     public Iterator<Registration> getAllRegistrations() {
         try {
             lock.readLock().lock();
-            return new ArrayList<>(regsByEp.values()).iterator();
+            return new ArrayList<Registration>(regsByEp.values()).iterator();
         } finally {
             lock.readLock().unlock();
         }
@@ -218,7 +218,7 @@ public class InMemoryRegistrationStore implements CaliforniumRegistrationStore, 
     @Override
     public Collection<Observation> addObservation(String registrationId, Observation observation) {
 
-        List<Observation> removed = new ArrayList<>();
+        List<Observation> removed = new ArrayList<Observation>();
 
         try {
             lock.writeLock().lock();
@@ -390,7 +390,7 @@ public class InMemoryRegistrationStore implements CaliforniumRegistrationStore, 
     }
 
     private Collection<Observation> unsafeRemoveAllObservations(String registrationId) {
-        Collection<Observation> removed = new ArrayList<>();
+        Collection<Observation> removed = new ArrayList<Observation>();
         Set<Token> tokens = tokensByRegId.get(registrationId);
         if (tokens != null) {
             for (Token token : tokens) {
@@ -405,7 +405,7 @@ public class InMemoryRegistrationStore implements CaliforniumRegistrationStore, 
     }
 
     private Collection<Observation> unsafeGetObservations(String registrationId) {
-        Collection<Observation> result = new ArrayList<>();
+        Collection<Observation> result = new ArrayList<Observation>();
         Set<Token> tokens = tokensByRegId.get(registrationId);
         if (tokens != null) {
             for (Token token : tokens) {
@@ -473,7 +473,7 @@ public class InMemoryRegistrationStore implements CaliforniumRegistrationStore, 
         @Override
         public void run() {
             try {
-                Collection<Registration> allRegs = new ArrayList<>();
+                Collection<Registration> allRegs = new ArrayList<Registration>();
                 try {
                     lock.readLock().lock();
                     allRegs.addAll(regsByEp.values());

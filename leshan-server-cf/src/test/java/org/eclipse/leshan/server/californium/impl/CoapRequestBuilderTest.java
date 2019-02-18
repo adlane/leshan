@@ -77,7 +77,7 @@ public class CoapRequestBuilderTest {
         Builder b = new Registration.Builder("regid", "endpoint",
                 Identity.unsecure(Inet4Address.getLoopbackAddress(), 12354), new InetSocketAddress(0));
         if (rootpath != null) {
-            Map<String, String> attr = new HashMap<>();
+            Map<String, String> attr = new HashMap<String, String>();
             attr.put("rt", "oma.lwm2m");
             b.objectLinks(new Link[] { new Link(rootpath, attr) });
         }
