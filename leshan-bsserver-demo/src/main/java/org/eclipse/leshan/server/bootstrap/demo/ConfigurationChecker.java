@@ -159,7 +159,10 @@ public class ConfigurationChecker {
             try (ByteArrayInputStream in = new ByteArrayInputStream(encodedCert)) {
                 return cf.generateCertificate(in);
             }
-        } catch (CertificateException | IOException e) {
+        } catch (CertificateException e) {
+            LOG.debug("Failed to decode X.509 certificate", e);
+            return null;
+        } catch (Exception e) {
             LOG.debug("Failed to decode X.509 certificate", e);
             return null;
         }
