@@ -128,16 +128,14 @@ public class DownlinkRequestSerDes {
     public static DownlinkRequest<?> deserialize(JsonObject o) {
         String kind = o.getString("kind", null);
         String path = o.getString("path", null);
-        switch (kind) {
-        case "observe": {
+        if (kind.equals("observe")) {
             int format = o.getInt("contentFormat", ContentFormat.TLV.getCode());
             return new ObserveRequest(ContentFormat.fromCode(format), path);
-        }
-        case "delete":
+        } else if (kind.equals("delete")) {
             return new DeleteRequest(path);
-        case "discover":
+        } else if (kind.equals("discover")) {
             return new DiscoverRequest(path);
-        case "create": {
+        } else if (kind.equals("create")) {
             int format = o.getInt("contentFormat", ContentFormat.TLV.getCode());
             int instanceId = o.getInt("instanceId", LwM2mObjectInstance.UNDEFINED);
 
@@ -149,25 +147,21 @@ public class DownlinkRequestSerDes {
             }
             return new CreateRequest(ContentFormat.fromCode(format), path,
                     new LwM2mObjectInstance(instanceId, resources));
-        }
-        case "execute":
+        } else if (kind.equals("execute")) {
             String parameters = o.getString("parameters", null);
             return new ExecuteRequest(path, parameters);
-        case "writeAttributes": {
+        } else if (kind.equals("writeAttributes")) {
             String observeSpec = o.getString("observeSpec", null);
             return new WriteAttributesRequest(path, AttributeSet.parse(observeSpec));
-        }
-        case "write": {
+        } else if (kind.equals("write")) {
             int format = o.getInt("contentFormat", ContentFormat.TLV.getCode());
             Mode mode = o.getString("mode", "REPLACE").equals("REPLACE") ? Mode.REPLACE : Mode.UPDATE;
             LwM2mNode node = LwM2mNodeSerDes.deserialize((JsonObject) o.get("node"));
             return new WriteRequest(mode, ContentFormat.fromCode(format), path, node);
-        }
-        case "read": {
+        } else if (kind.equals("read")) {
             int format = o.getInt("contentFormat", ContentFormat.TLV.getCode());
             return new ReadRequest(ContentFormat.fromCode(format), path);
-        }
-        default:
+        } else {
             throw new IllegalStateException("Invalid request missing kind attribute");
         }
     }

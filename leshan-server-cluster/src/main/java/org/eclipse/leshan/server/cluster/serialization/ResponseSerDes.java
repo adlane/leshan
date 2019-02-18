@@ -87,34 +87,28 @@ public class ResponseSerDes {
         String errorMessage = o.getString("errorMessage", null);
 
         String kind = o.getString("kind", null);
-        switch (kind) {
-        case "observe": {
+        if (kind.equals("observe")) {
             // TODO ser Observation
             LwM2mNode content = LwM2mNodeSerDes.deserialize((JsonObject) o.get("content"));
             return new ObserveResponse(code, content, null, null, errorMessage);
-        }
-        case "delete":
+        } else if (kind.equals("delete")) {
             return new DeleteResponse(code, errorMessage);
-        case "discover":
+        } else if (kind.equals("discover")) {
             String objectLinks = o.getString("objectLinks", "");
             return new DiscoverResponse(code, Link.parse(objectLinks.getBytes()), errorMessage);
-        case "create": {
+        } else if (kind.equals("create")) {
             String location = o.getString("location", null);
             return new CreateResponse(code, location, errorMessage);
-        }
-        case "execute":
+        } else if (kind.equals("execute")) {
             return new ExecuteResponse(code, errorMessage);
-        case "writeAttributes": {
+        } else if (kind.equals("writeAttributes")) {
             return new WriteAttributesResponse(code, errorMessage);
-        }
-        case "write": {
+        } else if (kind.equals("write")) {
             return new WriteResponse(code, errorMessage);
-        }
-        case "read": {
+        } else if (kind.equals("read")) {
             LwM2mNode content = LwM2mNodeSerDes.deserialize((JsonObject) o.get("content"));
             return new ReadResponse(code, content, errorMessage);
-        }
-        default:
+        } else {
             throw new IllegalStateException("Invalid response missing kind attribute");
         }
     }
