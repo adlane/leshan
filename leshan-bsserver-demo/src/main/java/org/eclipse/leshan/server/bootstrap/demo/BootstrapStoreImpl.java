@@ -70,7 +70,7 @@ public class BootstrapStoreImpl implements BootstrapStore {
         this.loadFromFile();
     }
 
-    private Map<String, BootstrapConfig> bootstrapByEndpoint = new ConcurrentHashMap<>();
+    private Map<String, BootstrapConfig> bootstrapByEndpoint = new ConcurrentHashMap<String, BootstrapConfig>();
 
     @Override
     public BootstrapConfig getBootstrap(String endpoint, Identity deviceIdentity) {
