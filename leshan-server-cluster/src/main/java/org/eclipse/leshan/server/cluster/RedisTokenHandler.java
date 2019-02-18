@@ -48,39 +48,63 @@ public class RedisTokenHandler implements RegistrationListener {
     @Override
     public void registered(Registration registration, Registration previousReg,
             Collection<Observation> previousObsersations) {
-        try (Jedis j = pool.getResource()) {
+        Jedis j = null;
+        try {
+            j = pool.getResource();
             // create registration entry
             byte[] k = (EP_UID + registration.getEndpoint()).getBytes();
             j.set(k, instanceUID.getBytes());
             j.expire(k, registration.getLifeTimeInSec().intValue());
+        } finally {
+            if (j != null) {
+                j.close();
+            }
         }
     }
 
     @Override
     public void updated(RegistrationUpdate update, Registration updatedRegistration,
             Registration previousRegistration) {
-        try (Jedis j = pool.getResource()) {
+        Jedis j = null;
+        try {
+            j = pool.getResource();
             // create registration entry
             byte[] k = (EP_UID + updatedRegistration.getEndpoint()).getBytes();
             j.set(k, instanceUID.getBytes());
             j.expire(k, updatedRegistration.getLifeTimeInSec().intValue());
+        } finally {
+            if (j != null) {
+                j.close();
+            }
         }
     }
 
     @Override
     public void unregistered(Registration registration, Collection<Observation> observations, boolean expired,
             Registration newReg) {
-        try (Jedis j = pool.getResource()) {
+        Jedis j = null;
+        try {
+            j = pool.getResource();
             // create registration entry
             j.del((EP_UID + registration.getEndpoint()).getBytes());
+        } finally {
+            if (j != null) {
+                j.close();
+            }
         }
     }
 
     public boolean isResponsible(String endpoint) {
-        try (Jedis j = pool.getResource()) {
+        Jedis j = null;
+        try {
+            j = pool.getResource();
             byte[] k = (EP_UID + endpoint).getBytes();
             byte[] data = j.get(k);
             return data != null && Arrays.equals(data, instanceUID.getBytes());
+        } finally {
+            if (j != null) {
+                j.close();
+            }
         }
     }
 }

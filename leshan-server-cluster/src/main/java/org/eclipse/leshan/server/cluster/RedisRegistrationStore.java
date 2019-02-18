@@ -137,7 +137,9 @@ public class RedisRegistrationStore implements CaliforniumRegistrationStore, Sta
 
     @Override
     public Deregistration addRegistration(Registration registration) {
-        try (Jedis j = pool.getResource()) {
+        Jedis j = null;
+        try {
+            j = pool.getResource();
             byte[] lockValue = null;
             byte[] lockKey = toLockKey(registration.getEndpoint());
 
@@ -175,12 +177,18 @@ public class RedisRegistrationStore implements CaliforniumRegistrationStore, Sta
             } finally {
                 RedisLock.release(j, lockKey, lockValue);
             }
+        } finally {
+            if (j != null) {
+                j.close();
+            }
         }
     }
 
     @Override
     public UpdatedRegistration updateRegistration(RegistrationUpdate update) {
-        try (Jedis j = pool.getResource()) {
+        Jedis j = null;
+        try {
+            j = pool.getResource();
 
             // Fetch the registration ep by registration ID index
             byte[] ep = j.get(toRegIdKey(update.getRegistrationId()));
@@ -223,32 +231,50 @@ public class RedisRegistrationStore implements CaliforniumRegistrationStore, Sta
             } finally {
                 RedisLock.release(j, lockKey, lockValue);
             }
+        } finally {
+            if (j != null) {
+                j.close();
+            }
         }
     }
 
     @Override
     public Registration getRegistration(String registrationId) {
-        try (Jedis j = pool.getResource()) {
+        Jedis j = null;
+        try {
+            j = pool.getResource();
             return getRegistration(j, registrationId);
+        } finally {
+            if (j != null) {
+                j.close();
+            }
         }
     }
 
     @Override
     public Registration getRegistrationByEndpoint(String endpoint) {
         Validate.notNull(endpoint);
-        try (Jedis j = pool.getResource()) {
+        Jedis j = null;
+        try {
+            j = pool.getResource();
             byte[] data = j.get(toEndpointKey(endpoint));
             if (data == null) {
                 return null;
             }
             return deserializeReg(data);
+        } finally {
+            if (j != null) {
+                j.close();
+            }
         }
     }
 
     @Override
     public Registration getRegistrationByAdress(InetSocketAddress address) {
         Validate.notNull(address);
-        try (Jedis j = pool.getResource()) {
+        Jedis j = null;
+        try {
+            j = pool.getResource();
             byte[] ep = j.get(toRegAddrKey(address));
             if (ep == null) {
                 return null;
@@ -258,6 +284,10 @@ public class RedisRegistrationStore implements CaliforniumRegistrationStore, Sta
                 return null;
             }
             return deserializeReg(data);
+        } finally {
+            if (j != null) {
+                j.close();
+            }
         }
     }
 
@@ -282,7 +312,9 @@ public class RedisRegistrationStore implements CaliforniumRegistrationStore, Sta
         }
 
         private void scanNext(String cursor) {
-            try (Jedis j = pool.getResource()) {
+            Jedis j = null;
+            try {
+                j = pool.getResource();
                 do {
                     ScanResult<byte[]> sr = j.scan(cursor.getBytes(), scanParams);
 
@@ -297,6 +329,10 @@ public class RedisRegistrationStore implements CaliforniumRegistrationStore, Sta
                 } while (!"0".equals(cursor) && scanResult.isEmpty());
 
                 this.cursor = cursor;
+            } finally {
+                if (j != null) {
+                    j.close();
+                }
             }
         }
 
@@ -331,8 +367,14 @@ public class RedisRegistrationStore implements CaliforniumRegistrationStore, Sta
 
     @Override
     public Deregistration removeRegistration(String registrationId) {
-        try (Jedis j = pool.getResource()) {
+        Jedis j = null;
+        try {
+            j = pool.getResource();
             return removeRegistration(j, registrationId, false);
+        } finally {
+          if (j != null) {
+              j.close();
+          }
         }
     }
 
@@ -421,7 +463,9 @@ public class RedisRegistrationStore implements CaliforniumRegistrationStore, Sta
     public Collection<Observation> addObservation(String registrationId, Observation observation) {
 
         List<Observation> removed = new ArrayList<Observation>();
-        try (Jedis j = pool.getResource()) {
+        Jedis j = null;
+        try {
+            j = pool.getResource();
 
             // fetch the client ep by registration ID index
             byte[] ep = j.get(toRegIdKey(registrationId));
@@ -447,13 +491,19 @@ public class RedisRegistrationStore implements CaliforniumRegistrationStore, Sta
             } finally {
                 RedisLock.release(j, lockKey, lockValue);
             }
+        } finally {
+            if (j != null) {
+                j.close();
+            }
         }
         return removed;
     }
 
     @Override
     public Observation removeObservation(String registrationId, byte[] observationId) {
-        try (Jedis j = pool.getResource()) {
+        Jedis j = null;
+        try {
+            j = pool.getResource();
 
             // fetch the client ep by registration ID index
             byte[] ep = j.get(toRegIdKey(registrationId));
@@ -477,6 +527,10 @@ public class RedisRegistrationStore implements CaliforniumRegistrationStore, Sta
             } finally {
                 RedisLock.release(j, lockKey, lockValue);
             }
+        } finally {
+            if (j != null) {
+                j.close();
+            }
         }
     }
 
@@ -487,8 +541,14 @@ public class RedisRegistrationStore implements CaliforniumRegistrationStore, Sta
 
     @Override
     public Collection<Observation> getObservations(String registrationId) {
-        try (Jedis j = pool.getResource()) {
+        Jedis j = null;
+        try {
+            j = pool.getResource();
             return getObservations(j, registrationId);
+        } finally {
+            if (j != null) {
+                j.close();
+            }
         }
     }
 
@@ -505,7 +565,9 @@ public class RedisRegistrationStore implements CaliforniumRegistrationStore, Sta
 
     @Override
     public Collection<Observation> removeObservations(String registrationId) {
-        try (Jedis j = pool.getResource()) {
+        Jedis j = null;
+        try {
+            j = pool.getResource();
             // check registration exists
             Registration registration = getRegistration(j, registrationId);
             if (registration == null)
@@ -521,6 +583,10 @@ public class RedisRegistrationStore implements CaliforniumRegistrationStore, Sta
                 return unsafeRemoveAllObservations(j, registrationId);
             } finally {
                 RedisLock.release(j, lockKey, lockValue);
+            }
+        } finally {
+            if (j != null) {
+                j.close();
             }
         }
     }
@@ -544,7 +610,9 @@ public class RedisRegistrationStore implements CaliforniumRegistrationStore, Sta
         String endpoint = ObserveUtil.validateCoapObservation(obs);
         org.eclipse.californium.core.observe.Observation previousObservation = null;
 
-        try (Jedis j = pool.getResource()) {
+        Jedis j = null;
+        try {
+            j = pool.getResource();
             byte[] lockValue = null;
             byte[] lockKey = toKey(LOCK_EP, endpoint);
             try {
@@ -580,13 +648,19 @@ public class RedisRegistrationStore implements CaliforniumRegistrationStore, Sta
             } finally {
                 RedisLock.release(j, lockKey, lockValue);
             }
+        } finally {
+            if (j != null) {
+                j.close();
+            }
         }
         return previousObservation;
     }
 
     @Override
     public void remove(Token token) {
-        try (Jedis j = pool.getResource()) {
+        Jedis j = null;
+        try {
+            j = pool.getResource();
             byte[] tokenKey = toKey(OBS_TKN, token.getBytes());
 
             // fetch the observation by token
@@ -613,18 +687,28 @@ public class RedisRegistrationStore implements CaliforniumRegistrationStore, Sta
             } finally {
                 RedisLock.release(j, lockKey, lockValue);
             }
+        } finally {
+            if (j != null) {
+                j.close();
+            }
         }
 
     }
 
     @Override
     public org.eclipse.californium.core.observe.Observation get(Token token) {
-        try (Jedis j = pool.getResource()) {
+        Jedis j = null;
+        try {
+            j = pool.getResource();
             byte[] obs = j.get(toKey(OBS_TKN, token.getBytes()));
             if (obs == null) {
                 return null;
             } else {
                 return deserializeObs(obs);
+            }
+        } finally {
+            if (j != null) {
+                j.close();
             }
         }
     }
@@ -721,7 +805,9 @@ public class RedisRegistrationStore implements CaliforniumRegistrationStore, Sta
         @Override
         public void run() {
 
-            try (Jedis j = pool.getResource()) {
+            Jedis j = null;
+            try {
+                j = pool.getResource();
                 Set<byte[]> endpointsExpired = j.zrangeByScore(EXP_EP, Double.NEGATIVE_INFINITY,
                         System.currentTimeMillis(), 0, cleanLimit);
 
@@ -735,6 +821,10 @@ public class RedisRegistrationStore implements CaliforniumRegistrationStore, Sta
                 }
             } catch (Exception e) {
                 LOG.warn("Unexpected Exception while registration cleaning", e);
+            } finally {
+                if (j != null) {
+                    j.close();
+                }
             }
         }
     }

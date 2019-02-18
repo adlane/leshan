@@ -109,7 +109,9 @@ public class RedisRequestResponseHandler {
             @Override
             public void run() {
                 do {
-                    try (Jedis j = pool.getResource()) {
+                    Jedis j = null;
+                    try {
+                        j = pool.getResource();
                         j.subscribe(new JedisPubSub() {
                             @Override
                             public void onMessage(String channel, String message) {
@@ -118,6 +120,10 @@ public class RedisRequestResponseHandler {
                         }, REQUEST_CHANNEL);
                     } catch (RuntimeException e) {
                         LOG.warn("Redis SUBSCRIBE interrupted.", e);
+                    } finally {
+                      if (j != null) {
+                          j.close();
+                      }
                     }
 
                     // wait & re-launch
@@ -243,16 +249,24 @@ public class RedisRequestResponseHandler {
     }
 
     private void sendAck(String ticket) {
-        try (Jedis j = pool.getResource()) {
+        Jedis j = null;
+        try {
+            j = pool.getResource();
             JsonObject m = Json.object();
             m.add("ticket", ticket);
             m.add("ack", true);
             j.publish(RESPONSE_CHANNEL, m.toString());
+        } finally {
+            if (j != null) {
+                j.close();
+            }
         }
     }
 
     private void sendError(String ticket, String message) {
-        try (Jedis j = pool.getResource()) {
+        Jedis j = null;
+        try {
+            j = pool.getResource();
             JsonObject m = Json.object();
             m.add("ticket", ticket);
 
@@ -261,16 +275,26 @@ public class RedisRequestResponseHandler {
 
             m.add("err", err);
             j.publish(RESPONSE_CHANNEL, m.toString());
+        } finally {
+            if (j != null) {
+                j.close();
+            }
         }
 
     }
 
     private void sendNotification(String ticket, LwM2mNode value) {
-        try (Jedis j = pool.getResource()) {
+        Jedis j = null;
+        try {
+            j = pool.getResource();
             JsonObject m = Json.object();
             m.add("ticket", ticket);
             m.add("rep", ResponseSerDes.jSerialize(ObserveResponse.success(value)));
             j.publish(RESPONSE_CHANNEL, m.toString());
+        } finally {
+            if (j != null) {
+                j.close();
+            }
         }
     }
 
@@ -279,11 +303,17 @@ public class RedisRequestResponseHandler {
             Observation observation = ((ObserveResponse) response).getObservation();
             observatioIdToTicket.put(new KeyId(observation.getId()), ticket);
         }
-        try (Jedis j = pool.getResource()) {
+        Jedis j = null;
+        try {
+            j = pool.getResource();
             JsonObject m = Json.object();
             m.add("ticket", ticket);
             m.add("rep", ResponseSerDes.jSerialize(response));
             j.publish(RESPONSE_CHANNEL, m.toString());
+        } finally {
+            if (j != null) {
+                j.close();
+            }
         }
     }
 
