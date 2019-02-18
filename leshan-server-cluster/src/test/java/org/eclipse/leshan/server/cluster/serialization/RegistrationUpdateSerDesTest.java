@@ -33,14 +33,14 @@ public class RegistrationUpdateSerDesTest {
     @Test
     public void ser_and_des_are_equals() throws Exception {
         Link[] objs = new Link[2];
-        Map<String, Object> att = new HashMap<>();
+        Map<String, Object> att = new HashMap<String, Object>();
         att.put("ts", 12);
         att.put("rt", "test");
         att.put("hb", null);
         objs[0] = new Link("/0/1024/2", att);
         objs[1] = new Link("/0/2");
 
-        Map<String, String> additionalAtt = new HashMap<>();
+        Map<String, String> additionalAtt = new HashMap<String, String>();
         additionalAtt.put("at", "5000");
 
         RegistrationUpdate ru = new RegistrationUpdate("myId",

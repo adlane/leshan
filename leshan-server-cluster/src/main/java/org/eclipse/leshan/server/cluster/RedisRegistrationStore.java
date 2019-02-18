@@ -286,7 +286,7 @@ public class RedisRegistrationStore implements CaliforniumRegistrationStore, Sta
                 do {
                     ScanResult<byte[]> sr = j.scan(cursor.getBytes(), scanParams);
 
-                    this.scanResult = new ArrayList<>();
+                    this.scanResult = new ArrayList<Registration>();
                     if (sr.getResult() != null && !sr.getResult().isEmpty()) {
                         for (byte[] value : j.mget(sr.getResult().toArray(new byte[][] {}))) {
                             this.scanResult.add(deserializeReg(value));
@@ -420,7 +420,7 @@ public class RedisRegistrationStore implements CaliforniumRegistrationStore, Sta
     @Override
     public Collection<Observation> addObservation(String registrationId, Observation observation) {
 
-        List<Observation> removed = new ArrayList<>();
+        List<Observation> removed = new ArrayList<Observation>();
         try (Jedis j = pool.getResource()) {
 
             // fetch the client ep by registration ID index
@@ -493,7 +493,7 @@ public class RedisRegistrationStore implements CaliforniumRegistrationStore, Sta
     }
 
     private Collection<Observation> getObservations(Jedis j, String registrationId) {
-        Collection<Observation> result = new ArrayList<>();
+        Collection<Observation> result = new ArrayList<Observation>();
         for (byte[] token : j.lrange(toKey(OBS_TKNS_REGID_IDX, registrationId), 0, -1)) {
             byte[] obs = j.get(toKey(OBS_TKN, token));
             if (obs != null) {
@@ -651,7 +651,7 @@ public class RedisRegistrationStore implements CaliforniumRegistrationStore, Sta
     }
 
     private Collection<Observation> unsafeRemoveAllObservations(Jedis j, String registrationId) {
-        Collection<Observation> removed = new ArrayList<>();
+        Collection<Observation> removed = new ArrayList<Observation>();
         byte[] regIdKey = toKey(OBS_TKNS_REGID_IDX, registrationId);
 
         // fetch all observations by token

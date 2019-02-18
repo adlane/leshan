@@ -117,7 +117,7 @@ public class RegistrationUpdateSerDes {
             for (int i = 0; i < links.size(); i++) {
                 JsonObject ol = (JsonObject) links.get(i);
 
-                Map<String, Object> attMap = new HashMap<>();
+                Map<String, Object> attMap = new HashMap<String, Object>();
                 JsonObject att = (JsonObject) ol.get("at");
                 for (String k : att.names()) {
                     JsonValue jsonValue = att.get(k);
@@ -134,7 +134,7 @@ public class RegistrationUpdateSerDes {
             }
         }
 
-        Map<String, String> addAttr = new HashMap<>();
+        Map<String, String> addAttr = new HashMap<String, String>();
         JsonObject o = (JsonObject) v.get("addAttr");
         for (String k : o.names()) {
             addAttr.put(k, o.getString(k, ""));

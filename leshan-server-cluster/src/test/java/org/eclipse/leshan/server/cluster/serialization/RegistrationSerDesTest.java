@@ -33,7 +33,7 @@ public class RegistrationSerDesTest {
     @Test
     public void ser_and_des_are_equals() throws Exception {
         Link[] objs = new Link[2];
-        Map<String, Object> att = new HashMap<>();
+        Map<String, Object> att = new HashMap<String, Object>();
         att.put("ts", 12);
         att.put("rt", "test");
         att.put("hb", null);
