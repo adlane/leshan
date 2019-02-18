@@ -83,7 +83,9 @@ public class DdfList2JsonGenerator {
                 Node ddf = ((Element) item).getElementsByTagName("DDF").item(0);
                 ddfUrls.add(ddf.getTextContent());
             }
-        } catch (SAXException | ParserConfigurationException e) {
+        } catch (SAXException e) {
+            throw new IOException(e);
+        } catch (ParserConfigurationException e) {
             throw new IOException(e);
         }
 
