@@ -189,7 +189,9 @@ public class IntegrationTestHelper {
     public void waitForRegistrationAtClientSide(long timeInSeconds) {
         try {
             assertTrue(clientObserver.waitForRegistration(timeInSeconds, TimeUnit.SECONDS));
-        } catch (InterruptedException | TimeoutException e) {
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (TimeoutException e) {
             throw new RuntimeException(e);
         }
     }
@@ -197,7 +199,9 @@ public class IntegrationTestHelper {
     public void waitForRegistrationAtServerSide(long timeInSeconds) {
         try {
             registrationListener.waitForRegister(timeInSeconds, TimeUnit.SECONDS);
-        } catch (InterruptedException | TimeoutException e) {
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (TimeoutException e) {
             throw new RuntimeException(e);
         }
     }
@@ -217,7 +221,9 @@ public class IntegrationTestHelper {
     public void waitForUpdateAtClientSide(long timeInSeconds) {
         try {
             assertTrue(clientObserver.waitForUpdate(timeInSeconds, TimeUnit.SECONDS));
-        } catch (InterruptedException | TimeoutException e) {
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (TimeoutException e) {
             throw new RuntimeException(e);
         }
     }
@@ -245,7 +251,9 @@ public class IntegrationTestHelper {
     public void waitForDeregistrationAtServerSide(long timeInSeconds) {
         try {
             registrationListener.waitForDeregister(timeInSeconds, TimeUnit.SECONDS);
-        } catch (InterruptedException | TimeoutException e) {
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (TimeoutException e) {
             throw new RuntimeException(e);
         }
     }
@@ -253,7 +261,9 @@ public class IntegrationTestHelper {
     public void waitForDeregistrationAtClientSide(long timeInSeconds) {
         try {
             assertTrue(clientObserver.waitForDeregistration(timeInSeconds, TimeUnit.SECONDS));
-        } catch (InterruptedException | TimeoutException e) {
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (TimeoutException e) {
             throw new RuntimeException(e);
         }
     }
