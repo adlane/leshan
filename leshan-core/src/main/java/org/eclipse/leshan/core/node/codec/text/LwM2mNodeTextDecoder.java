@@ -63,14 +63,13 @@ public class LwM2mNodeTextDecoder {
                 throw new CodecException("Invalid value [%s] for integer resource [%s]", value, path);
             }
         case BOOLEAN:
-            switch (value) {
-            case "0":
-                return false;
-            case "1":
-                return true;
-            default:
-                throw new CodecException("Invalid value [%s] for boolean resource [%s]", value, path);
+            if (value.equals("0")) {
+              return false;
             }
+            if (value.equals("1")) {
+              return true;
+            }
+            throw new CodecException("Invalid value [%s] for boolean resource [%s]", value, path);
         case FLOAT:
             try {
                 return Double.valueOf(value);
