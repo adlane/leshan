@@ -46,7 +46,7 @@ public class ObjectLoader {
      * Load the default LWM2M objects
      */
     public static List<ObjectModel> loadDefault() {
-        List<ObjectModel> models = new ArrayList<>();
+        List<ObjectModel> models = new ArrayList<ObjectModel>();
 
         // standard objects
         LOG.debug("Loading OMA standard object models");
@@ -100,7 +100,7 @@ public class ObjectLoader {
      * @param filenames names of all the DDF files
      */
     public static List<ObjectModel> loadDdfResources(String path, String[] filenames) {
-        List<ObjectModel> models = new ArrayList<>();
+        List<ObjectModel> models = new ArrayList<ObjectModel>();
         for (String filename : filenames) {
             String fullpath = StringUtils.removeEnd(path, "/") + "/" + StringUtils.removeStart(filename, "/");
             InputStream input = ObjectLoader.class.getResourceAsStream(fullpath);
@@ -125,7 +125,7 @@ public class ObjectLoader {
      * @param paths An array of paths to DDF files.
      */
     public static List<ObjectModel> loadDdfResources(String[] paths) {
-        List<ObjectModel> models = new ArrayList<>();
+        List<ObjectModel> models = new ArrayList<ObjectModel>();
         for (String path : paths) {
             InputStream input = ObjectLoader.class.getResourceAsStream(path);
             if (input != null) {
@@ -145,7 +145,7 @@ public class ObjectLoader {
      * Load object definitions from files
      */
     public static List<ObjectModel> loadObjectsFromDir(File modelsDir) {
-        List<ObjectModel> models = new ArrayList<>();
+        List<ObjectModel> models = new ArrayList<ObjectModel>();
 
         // check if the folder is usable
         if (!modelsDir.isDirectory() || !modelsDir.canRead()) {

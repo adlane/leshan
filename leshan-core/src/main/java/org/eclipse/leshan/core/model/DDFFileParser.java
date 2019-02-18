@@ -65,7 +65,7 @@ public class DDFFileParser {
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document document = builder.parse(inputStream);
 
-            ArrayList<ObjectModel> objects = new ArrayList<>();
+            ArrayList<ObjectModel> objects = new ArrayList<ObjectModel>();
             NodeList nodeList = document.getDocumentElement().getElementsByTagName("Object");
             for (int i = 0; i < nodeList.getLength(); i++) {
                 objects.add(parseObject(nodeList.item(i)));
@@ -85,7 +85,7 @@ public class DDFFileParser {
         String version = ObjectModel.DEFAULT_VERSION;
         boolean multiple = false;
         boolean mandatory = false;
-        List<ResourceModel> resources = new ArrayList<>();
+        List<ResourceModel> resources = new ArrayList<ResourceModel>();
 
         for (int i = 0; i < object.getChildNodes().getLength(); i++) {
             Node field = object.getChildNodes().item(i);

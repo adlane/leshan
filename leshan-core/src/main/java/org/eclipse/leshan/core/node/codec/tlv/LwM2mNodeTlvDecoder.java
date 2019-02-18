@@ -60,7 +60,7 @@ public class LwM2mNodeTlvDecoder {
 
         // Object
         if (nodeClass == LwM2mObject.class) {
-            Map<Integer, LwM2mObjectInstance> instances = new HashMap<>(tlvs.length);
+            Map<Integer, LwM2mObjectInstance> instances = new HashMap<Integer, LwM2mObjectInstance>(tlvs.length);
 
             // is it an array of TLV resources?
             if (tlvs.length > 0 && //
@@ -167,7 +167,7 @@ public class LwM2mNodeTlvDecoder {
     private static LwM2mObjectInstance parseObjectInstanceTlv(Tlv[] rscTlvs, int objectId, int instanceId,
             LwM2mModel model) throws CodecException {
         // read resources
-        Map<Integer, LwM2mResource> resources = new HashMap<>(rscTlvs.length);
+        Map<Integer, LwM2mResource> resources = new HashMap<Integer, LwM2mResource>(rscTlvs.length);
         for (Tlv rscTlv : rscTlvs) {
             LwM2mPath resourcePath = new LwM2mPath(objectId, instanceId, rscTlv.getIdentifier());
             LwM2mResource resource = parseResourceTlv(rscTlv, resourcePath, model);
@@ -198,7 +198,7 @@ public class LwM2mNodeTlvDecoder {
 
     private static Map<Integer, Object> parseTlvValues(Tlv[] tlvs, Type expectedType, LwM2mPath path)
             throws CodecException {
-        Map<Integer, Object> values = new HashMap<>();
+        Map<Integer, Object> values = new HashMap<Integer, Object>();
         for (Tlv tlvChild : tlvs) {
             if (tlvChild.getType() != TlvType.RESOURCE_INSTANCE)
                 throw new CodecException("Expected TLV of type RESOURCE_INSTANCE but was %s for path %s",

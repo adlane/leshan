@@ -59,7 +59,7 @@ public class LwM2mNodeDecoderTest {
         List<ObjectModel> objects = ObjectLoader.loadDefault();
 
         // add object 65 from the LWM2M v1.0.1 specification (figure 28)
-        List<ResourceModel> resForObj65 = new ArrayList<>();
+        List<ResourceModel> resForObj65 = new ArrayList<ResourceModel>();
         resForObj65.add(new ResourceModel(0, "res0", Operations.R, true, false, Type.OBJLNK, null, null, null));
         resForObj65.add(new ResourceModel(1, "res1", Operations.R, false, false, Type.STRING, null, null, null));
         resForObj65.add(new ResourceModel(2, "res2", Operations.R, false, false, Type.INTEGER, null, null, null));
@@ -67,7 +67,7 @@ public class LwM2mNodeDecoderTest {
                 new ObjectModel(65, "object link tests 65", "", ObjectModel.DEFAULT_VERSION, true, false, resForObj65));
 
         // add object 66 from the LWM2M v1.0.1 specification (figure 28)
-        List<ResourceModel> resForObj66 = new ArrayList<>();
+        List<ResourceModel> resForObj66 = new ArrayList<ResourceModel>();
         resForObj66.add(new ResourceModel(0, "res0", Operations.R, true, false, Type.STRING, null, null, null));
         resForObj66.add(new ResourceModel(1, "res1", Operations.R, false, false, Type.STRING, null, null, null));
         resForObj66.add(new ResourceModel(2, "res2", Operations.R, false, false, Type.OBJLNK, null, null, null));

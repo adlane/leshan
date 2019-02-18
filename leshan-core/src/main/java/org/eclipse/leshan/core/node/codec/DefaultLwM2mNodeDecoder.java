@@ -110,7 +110,7 @@ public class DefaultLwM2mNodeDecoder implements LwM2mNodeDecoder {
         if (node == null)
             return Collections.emptyList();
 
-        ArrayList<TimestampedLwM2mNode> timestampedNodes = new ArrayList<>(1);
+        ArrayList<TimestampedLwM2mNode> timestampedNodes = new ArrayList<TimestampedLwM2mNode>(1);
         timestampedNodes.add(new TimestampedLwM2mNode(null, node));
         return Collections.unmodifiableList(timestampedNodes);
     }

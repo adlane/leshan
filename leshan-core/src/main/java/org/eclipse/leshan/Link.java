@@ -66,7 +66,7 @@ public class Link implements Serializable {
     public Link(String url, Map<String, ?> attributes) {
         this.url = url;
         if (attributes != null) {
-            this.attributes = Collections.unmodifiableMap(new HashMap<>(attributes));
+            this.attributes = Collections.unmodifiableMap(new HashMap<String, Object>(attributes));
         } else {
             this.attributes = Collections.emptyMap();
         }
@@ -132,7 +132,7 @@ public class Link implements Serializable {
             url = StringUtils.removeStart(StringUtils.removeEnd(url, ">"), "<");
 
             // parse attributes
-            Map<String, Object> attributes = new HashMap<>();
+            Map<String, Object> attributes = new HashMap<String, Object>();
 
             if (linkParts.length > 1) {
                 for (int i = 1; i < linkParts.length; i++) {

@@ -82,7 +82,7 @@ public class LwM2mNodeEncoderTest {
 
     @Test(expected = CodecException.class)
     public void text_encode_multiple_instances() {
-        Map<Integer, Long> values = new HashMap<>();
+        Map<Integer, Long> values = new HashMap<Integer, Long>();
         values.put(0, 1L);
         values.put(1, 5L);
         encoder.encode(LwM2mMultipleResource.newIntegerResource(6, values), ContentFormat.TEXT, new LwM2mPath("/3/0/6"),
@@ -111,24 +111,24 @@ public class LwM2mNodeEncoderTest {
                     .toCharArray());
 
     private Collection<LwM2mResource> getDeviceResources() {
-        Collection<LwM2mResource> resources = new ArrayList<>();
+        Collection<LwM2mResource> resources = new ArrayList<LwM2mResource>();
 
         resources.add(LwM2mSingleResource.newStringResource(0, "Open Mobile Alliance"));
         resources.add(LwM2mSingleResource.newStringResource(1, "Lightweight M2M Client"));
         resources.add(LwM2mSingleResource.newStringResource(2, "345000123"));
         resources.add(LwM2mSingleResource.newStringResource(3, "1.0"));
 
-        Map<Integer, Long> values = new HashMap<>();
+        Map<Integer, Long> values = new HashMap<Integer, Long>();
         values.put(0, 1L);
         values.put(1, 5L);
         resources.add(LwM2mMultipleResource.newIntegerResource(6, values));
 
-        values = new HashMap<>();
+        values = new HashMap<Integer, Long>();
         values.put(0, 3800L);
         values.put(1, 5000L);
         resources.add(LwM2mMultipleResource.newIntegerResource(7, values));
 
-        values = new HashMap<>();
+        values = new HashMap<Integer, Long>();
         values.put(0, 125L);
         values.put(1, 900L);
         resources.add(LwM2mMultipleResource.newIntegerResource(8, values));
@@ -136,7 +136,7 @@ public class LwM2mNodeEncoderTest {
         resources.add(LwM2mSingleResource.newIntegerResource(9, 100));
         resources.add(LwM2mSingleResource.newIntegerResource(10, 15));
 
-        values = new HashMap<>();
+        values = new HashMap<Integer, Long>();
         values.put(0, 0L);
         resources.add(LwM2mMultipleResource.newIntegerResource(11, values));
 
@@ -212,7 +212,7 @@ public class LwM2mNodeEncoderTest {
 
     @Test
     public void json_encode_timestamped_resources() throws CodecException {
-        List<TimestampedLwM2mNode> data = new ArrayList<>();
+        List<TimestampedLwM2mNode> data = new ArrayList<TimestampedLwM2mNode>();
         data.add(new TimestampedLwM2mNode(500L, LwM2mSingleResource.newFloatResource(1, 22.9)));
         data.add(new TimestampedLwM2mNode(510L, LwM2mSingleResource.newFloatResource(1, 22.4)));
         data.add(new TimestampedLwM2mNode(520L, LwM2mSingleResource.newFloatResource(1, 24.1)));
@@ -231,7 +231,7 @@ public class LwM2mNodeEncoderTest {
 
     @Test
     public void json_encode_timestamped_instances() throws CodecException {
-        List<TimestampedLwM2mNode> data = new ArrayList<>();
+        List<TimestampedLwM2mNode> data = new ArrayList<TimestampedLwM2mNode>();
 
         LwM2mObjectInstance instanceAt110 = new LwM2mObjectInstance(0, LwM2mSingleResource.newFloatResource(1, 22.9));
         LwM2mObjectInstance instanceAt120 = new LwM2mObjectInstance(0, LwM2mSingleResource.newFloatResource(1, 22.4),
@@ -257,7 +257,7 @@ public class LwM2mNodeEncoderTest {
 
     @Test
     public void json_encode_timestamped_Object() throws CodecException {
-        List<TimestampedLwM2mNode> data = new ArrayList<>();
+        List<TimestampedLwM2mNode> data = new ArrayList<TimestampedLwM2mNode>();
 
         LwM2mObject objectAt210 = new LwM2mObject(1204,
                 new LwM2mObjectInstance(0, LwM2mSingleResource.newFloatResource(1, 22.9)));

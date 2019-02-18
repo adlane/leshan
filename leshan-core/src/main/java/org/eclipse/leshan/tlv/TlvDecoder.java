@@ -39,7 +39,7 @@ public class TlvDecoder {
     public static Tlv[] decode(ByteBuffer input) throws TlvException {
 
         try {
-            List<Tlv> tlvs = new ArrayList<>();
+            List<Tlv> tlvs = new ArrayList<Tlv>();
 
             while (input.remaining() > 0) {
                 input.order(ByteOrder.BIG_ENDIAN);
