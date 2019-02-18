@@ -85,7 +85,10 @@ public class BootstrapSecurityStoreImpl implements BootstrapSecurityStore {
                     SecurityInfo securityInfo = SecurityInfo.newRawPublicKeyInfo(endpoint,
                             SecurityUtil.publicKey.decode(value.publicKeyOrId));
                     return Arrays.asList(securityInfo);
-                } catch (IOException | GeneralSecurityException e) {
+                } catch (IOException e) {
+                    LOG.error("Unable to decode Client public key for {}", endpoint, e);
+                    return null;
+                } catch (GeneralSecurityException e) {
                     LOG.error("Unable to decode Client public key for {}", endpoint, e);
                     return null;
                 }
