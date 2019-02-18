@@ -47,8 +47,14 @@ public class RedisRegistrationEventPublisher implements RegistrationListener {
     public void registered(Registration registration, Registration previousReg,
             Collection<Observation> previousObsersations) {
         String payload = RegistrationSerDes.sSerialize(registration);
-        try (Jedis j = pool.getResource()) {
+        Jedis j = null;
+        try {
+            j = pool.getResource();
             j.publish(REGISTER_EVENT, payload);
+        } finally {
+            if (j != null) {
+                j.close();
+            }
         }
     }
 
@@ -59,8 +65,14 @@ public class RedisRegistrationEventPublisher implements RegistrationListener {
         value.add("regUpdate", RegistrationUpdateSerDes.jSerialize(update));
         value.add("regUpdated", RegistrationSerDes.jSerialize(updatedRegistration));
 
-        try (Jedis j = pool.getResource()) {
+        Jedis j = null;
+        try {
+            j = pool.getResource();
             j.publish(UPDATE_EVENT, value.toString());
+        } finally {
+            if (j != null) {
+                j.close();
+            }
         }
     }
 
@@ -68,8 +80,14 @@ public class RedisRegistrationEventPublisher implements RegistrationListener {
     public void unregistered(Registration registration, Collection<Observation> observations, boolean expired,
             Registration newReg) {
         String payload = RegistrationSerDes.sSerialize(registration);
-        try (Jedis j = pool.getResource()) {
+        Jedis j = null;
+        try {
+            j = pool.getResource();
             j.publish(DEREGISTER_EVENT, payload);
+        } finally {
+            if (j != null) {
+                j.close();
+            }
         }
     }
 }
