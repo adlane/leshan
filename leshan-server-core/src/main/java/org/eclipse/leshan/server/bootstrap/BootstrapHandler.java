@@ -195,7 +195,7 @@ public class BootstrapHandler {
             });
         } else {
             // we are done, send the ACL
-            List<Integer> aclsToSend = new ArrayList<>(cfg.acls.keySet());
+            List<Integer> aclsToSend = new ArrayList<Integer>(cfg.acls.keySet());
             sendAcls(session, cfg, aclsToSend);
         }
     }
@@ -306,7 +306,7 @@ public class BootstrapHandler {
     }
 
     private LwM2mObjectInstance convertToAclInstance(int instanceId, ACLConfig aclConfig) {
-        Collection<LwM2mResource> resources = new ArrayList<>();
+        Collection<LwM2mResource> resources = new ArrayList<LwM2mResource>();
 
         resources.add(LwM2mSingleResource.newIntegerResource(0, aclConfig.objectId));
         resources.add(LwM2mSingleResource.newIntegerResource(1, aclConfig.objectInstanceId));

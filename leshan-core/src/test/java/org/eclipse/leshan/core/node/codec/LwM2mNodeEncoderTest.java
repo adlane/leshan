@@ -320,7 +320,7 @@ public class LwM2mNodeEncoderTest {
 
     @Test
     public void senml_json_encode_multiple_resource() {
-        Map<Integer, Long> values = new HashMap<>();
+        Map<Integer, Long> values = new HashMap<Integer, Long>();
         values.put(0, 3800L);
         values.put(1, 5000L);
         LwM2mResource oResource = LwM2mMultipleResource.newIntegerResource(7, values);

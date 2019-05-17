@@ -27,7 +27,7 @@ public class SenMLPack {
 
     public void addRecord(SenMLRecord record) {
         if (records == null) {
-            records = new ArrayList<>();
+            records = new ArrayList<SenMLRecord>();
         }
 
         records.add(record);

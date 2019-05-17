@@ -64,7 +64,7 @@ public class LwM2mNodeSenMLJsonEncoder {
         private LwM2mValueConverter converter;
 
         // visitor output
-        private ArrayList<SenMLRecord> records = new ArrayList<>();
+        private ArrayList<SenMLRecord> records = new ArrayList<SenMLRecord>();
 
         @Override
         public void visit(LwM2mObject object) {
