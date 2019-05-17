@@ -40,7 +40,7 @@ public class SerializationUtil {
      * @return null if class is serializable or a map of errors (unserializable class or field => error message).
      */
     public static Map<Object, String> isSerializable(Class<?> clazz, String... excludes) {
-        Map<Object, String> notSerializableObject = new LinkedHashMap<>();
+        Map<Object, String> notSerializableObject = new LinkedHashMap<Object, String>();
         isSerializable(clazz, notSerializableObject, Arrays.asList(excludes));
         return notSerializableObject;
     }

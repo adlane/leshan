@@ -114,7 +114,7 @@ public class DefaultBootstrapHandler implements BootstrapHandler {
     }
 
     protected void startBootstrap(BootstrapSession session, BootstrapConfig cfg) {
-        delete(session, cfg, new ArrayList<>(cfg.toDelete));
+        delete(session, cfg, new ArrayList<String>(cfg.toDelete));
     }
 
     protected void delete(final BootstrapSession session, final BootstrapConfig cfg, final List<String> pathToDelete) {
@@ -139,7 +139,7 @@ public class DefaultBootstrapHandler implements BootstrapHandler {
             });
         } else {
             // we are done, write the securities now
-            List<Integer> securityInstancesToWrite = new ArrayList<>(cfg.security.keySet());
+            List<Integer> securityInstancesToWrite = new ArrayList<Integer>(cfg.security.keySet());
             writeSecurities(session, cfg, securityInstancesToWrite);
         }
     }
@@ -175,7 +175,7 @@ public class DefaultBootstrapHandler implements BootstrapHandler {
             });
         } else {
             // we are done, write the servers now
-            List<Integer> serverInstancesToWrite = new ArrayList<>(cfg.servers.keySet());
+            List<Integer> serverInstancesToWrite = new ArrayList<Integer>(cfg.servers.keySet());
             writeServers(session, cfg, serverInstancesToWrite);
         }
     }
@@ -211,7 +211,7 @@ public class DefaultBootstrapHandler implements BootstrapHandler {
             });
         } else {
             // we are done, write ACLs now
-            List<Integer> aclInstancesToWrite = new ArrayList<>(cfg.acls.keySet());
+            List<Integer> aclInstancesToWrite = new ArrayList<Integer>(cfg.acls.keySet());
             writedAcls(session, cfg, aclInstancesToWrite);
         }
     }

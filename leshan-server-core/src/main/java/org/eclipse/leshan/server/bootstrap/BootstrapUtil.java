@@ -28,7 +28,7 @@ import org.eclipse.leshan.server.bootstrap.BootstrapConfig.ServerSecurity;
 
 public class BootstrapUtil {
     public static LwM2mObjectInstance convertToSecurityInstance(int instanceId, ServerSecurity securityConfig) {
-        Collection<LwM2mResource> resources = new ArrayList<>();
+        Collection<LwM2mResource> resources = new ArrayList<LwM2mResource>();
 
         if (securityConfig.uri != null)
             resources.add(LwM2mSingleResource.newStringResource(0, securityConfig.uri));
@@ -60,7 +60,7 @@ public class BootstrapUtil {
     }
 
     public static LwM2mObjectInstance convertToServerInstance(int instanceId, ServerConfig serverConfig) {
-        Collection<LwM2mResource> resources = new ArrayList<>();
+        Collection<LwM2mResource> resources = new ArrayList<LwM2mResource>();
 
         resources.add(LwM2mSingleResource.newIntegerResource(0, serverConfig.shortId));
         resources.add(LwM2mSingleResource.newIntegerResource(1, serverConfig.lifetime));
@@ -78,7 +78,7 @@ public class BootstrapUtil {
     }
 
     public static LwM2mObjectInstance convertToAclInstance(int instanceId, ACLConfig aclConfig) {
-        Collection<LwM2mResource> resources = new ArrayList<>();
+        Collection<LwM2mResource> resources = new ArrayList<LwM2mResource>();
 
         resources.add(LwM2mSingleResource.newIntegerResource(0, aclConfig.objectId));
         resources.add(LwM2mSingleResource.newIntegerResource(1, aclConfig.objectInstanceId));

@@ -37,7 +37,7 @@ public class BootstrapConfig implements Serializable {
 
     public Map<Integer, ServerSecurity> security = new HashMap<Integer, ServerSecurity>();
 
-    public Map<Integer, ACLConfig> acls = new HashMap<>();
+    public Map<Integer, ACLConfig> acls = new HashMap<Integer, ACLConfig>();
 
     /** server configuration (object 1) */
     static public class ServerConfig implements Serializable {
