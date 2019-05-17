@@ -231,7 +231,9 @@ public class IntegrationTestHelper {
     public void waitForBootstrapFinishedAtClientSide(long timeInSeconds) {
         try {
             assertTrue(clientObserver.waitForBootstrap(timeInSeconds, TimeUnit.SECONDS));
-        } catch (InterruptedException | TimeoutException e) {
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (TimeoutException e) {
             throw new RuntimeException(e);
         }
     }
