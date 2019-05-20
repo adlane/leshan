@@ -15,7 +15,6 @@
  *******************************************************************************/
 package org.eclipse.leshan.core.node.codec.text;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -39,7 +38,13 @@ public class LwM2mNodeTextDecoder {
 
         ResourceModel rDesc = model.getResourceModel(path.getObjectId(), path.getResourceId());
 
-        String strValue = content != null ? new String(content, StandardCharsets.UTF_8) : "";
+        String strValue = null;
+        try {
+          strValue = content != null ? new String(content, "UTF-8") : "";
+        } catch (java.io.UnsupportedEncodingException e) {
+          strValue = content != null ? new String(content) : "";
+        }
+
         if (rDesc != null && rDesc.type != null) {
             return LwM2mSingleResource.newResource(path.getResourceId(), parseTextValue(strValue, rDesc.type, path),
                     rDesc.type);

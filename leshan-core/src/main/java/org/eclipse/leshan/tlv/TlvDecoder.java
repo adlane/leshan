@@ -20,7 +20,6 @@ import java.nio.BufferOverflowException;
 import java.nio.BufferUnderflowException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -153,7 +152,11 @@ public class TlvDecoder {
      * Decodes a byte array into string value.
      */
     public static String decodeString(byte[] value) {
-        return new String(value, StandardCharsets.UTF_8);
+      try {
+        return new String(value, "UTF-8");
+      } catch (java.io.UnsupportedEncodingException e) {
+        return new String(value);
+      }
     }
 
     /**

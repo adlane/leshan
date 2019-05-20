@@ -15,7 +15,6 @@
  *******************************************************************************/
 package org.eclipse.leshan.core.node.codec.text;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 import org.eclipse.leshan.core.model.LwM2mModel;
@@ -104,7 +103,11 @@ public class LwM2mNodeTextEncoder {
                 throw new CodecException("Cannot encode %s in text format for %s", val, path);
             }
 
-            encoded = strValue.getBytes(StandardCharsets.UTF_8);
+            try {
+              encoded = strValue.getBytes("UTF-8");
+            } catch (java.io.UnsupportedEncodingException e) {
+              encoded = strValue.getBytes();
+            }
         }
     }
 }

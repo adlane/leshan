@@ -16,7 +16,6 @@
 package org.eclipse.leshan;
 
 import java.io.Serializable;
-import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -102,7 +101,12 @@ public class Link implements Serializable {
         if (content == null) {
             return new Link[] {};
         }
-        String s = new String(content, StandardCharsets.UTF_8);
+        String s;
+        try {
+          s = new String(content, "UTF-8");
+        } catch (java.io.UnsupportedEncodingException e) {
+          s = new String(content);
+        }
         String[] links = s.split(",");
         Link[] linksResult = new Link[links.length];
         int index = 0;

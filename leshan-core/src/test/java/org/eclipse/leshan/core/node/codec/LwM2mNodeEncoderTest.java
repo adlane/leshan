@@ -16,7 +16,6 @@
  *******************************************************************************/
 package org.eclipse.leshan.core.node.codec;
 
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -60,7 +59,11 @@ public class LwM2mNodeEncoderTest {
         byte[] encoded = encoder.encode(LwM2mSingleResource.newFloatResource(15, 56.4D), ContentFormat.TEXT,
                 new LwM2mPath("/323/0/15"), model);
 
-        Assert.assertEquals("56.4", new String(encoded, StandardCharsets.UTF_8));
+        try {
+          Assert.assertEquals("56.4", new String(encoded, "UTF-8"));
+        } catch (java.io.UnsupportedEncodingException e) {
+          Assert.assertEquals("56.4", new String(encoded));
+        }
     }
 
     @Test
@@ -69,7 +72,11 @@ public class LwM2mNodeEncoderTest {
         byte[] encoded = encoder.encode(LwM2mSingleResource.newStringResource(13, "2010-01-01T12:00:00+01:00"),
                 ContentFormat.TEXT, new LwM2mPath("/3/0/13"), model);
 
-        Assert.assertEquals("1262343600", new String(encoded, StandardCharsets.UTF_8));
+        try {
+          Assert.assertEquals("1262343600", new String(encoded, "UTF-8"));
+        } catch (java.io.UnsupportedEncodingException e) {
+          Assert.assertEquals("1262343600", new String(encoded));
+        }
     }
 
     @Test
@@ -78,7 +85,11 @@ public class LwM2mNodeEncoderTest {
         byte[] encoded = encoder.encode(LwM2mSingleResource.newIntegerResource(13, 1367491215000L), ContentFormat.TEXT,
                 new LwM2mPath("/3/0/13"), model);
 
-        Assert.assertEquals("1367491215", new String(encoded, StandardCharsets.UTF_8));
+        try {
+          Assert.assertEquals("1367491215", new String(encoded, "UTF-8"));
+        } catch (java.io.UnsupportedEncodingException e) {
+          Assert.assertEquals("1367491215", new String(encoded));
+        }
     }
 
     @Test(expected = CodecException.class)

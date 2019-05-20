@@ -18,7 +18,6 @@ package org.eclipse.leshan.core.node.codec;
 
 import static org.junit.Assert.*;
 
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -199,8 +198,14 @@ public class LwM2mNodeDecoderTest {
     @Test
     public void text_manufacturer_resource() throws CodecException {
         String value = "MyManufacturer";
-        LwM2mSingleResource resource = (LwM2mSingleResource) decoder.decode(value.getBytes(StandardCharsets.UTF_8),
-                ContentFormat.TEXT, new LwM2mPath(3, 0, 0), model);
+        LwM2mSingleResource resource = null;
+        try {
+          resource = (LwM2mSingleResource) decoder.decode(value.getBytes("UTF-8"),
+              ContentFormat.TEXT, new LwM2mPath(3, 0, 0), model);
+        } catch (java.io.UnsupportedEncodingException e) {
+          resource = (LwM2mSingleResource) decoder.decode(value.getBytes(),
+              ContentFormat.TEXT, new LwM2mPath(3, 0, 0), model);
+        }
 
         assertEquals(0, resource.getId());
         assertFalse(resource.isMultiInstances());
@@ -211,13 +216,23 @@ public class LwM2mNodeDecoderTest {
     @Test(expected = CodecException.class)
     public void content_format_is_mandatory() throws CodecException {
         String value = "MyManufacturer";
-        decoder.decode(value.getBytes(StandardCharsets.UTF_8), null, new LwM2mPath(666, 0, 0), model);
+        try {
+          decoder.decode(value.getBytes("UTF-8"), null, new LwM2mPath(666, 0, 0), model);
+        } catch (java.io.UnsupportedEncodingException e) {
+          decoder.decode(value.getBytes(), null, new LwM2mPath(666, 0, 0), model);
+        }
     }
 
     @Test
     public void text_battery_resource() throws CodecException {
-        LwM2mSingleResource resource = (LwM2mSingleResource) decoder.decode("100".getBytes(StandardCharsets.UTF_8),
-                ContentFormat.TEXT, new LwM2mPath(3, 0, 9), model);
+      LwM2mSingleResource resource = null;
+      try {
+        resource = (LwM2mSingleResource) decoder.decode("100".getBytes("UTF-8"),
+            ContentFormat.TEXT, new LwM2mPath(3, 0, 9), model);
+      } catch (java.io.UnsupportedEncodingException e) {
+        resource = (LwM2mSingleResource) decoder.decode("100".getBytes(),
+            ContentFormat.TEXT, new LwM2mPath(3, 0, 9), model);
+      }
 
         assertEquals(9, resource.getId());
         assertFalse(resource.isMultiInstances());

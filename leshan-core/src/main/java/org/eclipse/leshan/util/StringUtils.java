@@ -17,7 +17,6 @@
 package org.eclipse.leshan.util;
 
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 
 /**
  * <p>
@@ -320,7 +319,7 @@ public class StringUtils {
      * @since As of 1.7, throws {@link NullPointerException} instead of UnsupportedEncodingException
      */
     public static String newStringUtf8(final byte[] bytes) {
-        return newString(bytes, StandardCharsets.UTF_8);
+        return newString(bytes, Charset.forName("UTF-8"));
     }
 
     /**
@@ -350,7 +349,11 @@ public class StringUtils {
      * @see #getBytesUnchecked(String, String)
      */
     public static byte[] getBytesUtf8(final String string) {
-        return getBytes(string, StandardCharsets.UTF_8);
+        try {
+          return string.getBytes("UTF-8");
+        } catch (java.io.UnsupportedEncodingException e) {
+          return string.getBytes();
+        }
     }
 
     /**
