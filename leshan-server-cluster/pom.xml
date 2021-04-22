@@ -40,7 +40,7 @@ Contributors:
         <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
-            <version>3.5.1</version>
+            <version>3.6.0</version>
         </dependency>
         <dependency>
             <groupId>com.eclipsesource.minimal-json</groupId>
