@@ -1,0 +1,36 @@
+version: 2
+updates:
+- package-ecosystem: maven
+  directory: "/"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: org.eclipse.jetty:jetty-continuation
+    versions:
+    - 9.4.37.v20210219
+    - 9.4.38.v20210224
+    - 9.4.39.v20210325
+  - dependency-name: org.eclipse.jetty:jetty-webapp
+    versions:
+    - 9.4.37.v20210219
+    - 9.4.38.v20210224
+    - 9.4.39.v20210325
+  - dependency-name: org.eclipse.californium:scandium
+    versions:
+    - 2.6.0
+    - 2.6.1
+    - 2.6.2
+  - dependency-name: org.eclipse.californium:element-connector
+    versions:
+    - 2.6.0
+    - 2.6.1
+    - 2.6.2
+  - dependency-name: org.eclipse.californium:californium-core
+    versions:
+    - 2.6.0
+    - 2.6.1
+    - 2.6.2
+  - dependency-name: redis.clients:jedis
+    versions:
+    - 3.5.2
